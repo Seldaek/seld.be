@@ -1,0 +1,16 @@
+---
+extends: _layouts.post
+section: content
+title: "Symfony Live 2010 - Symfony2, speaking and stuff"
+date: 2010-02-18 19:48:42
+description: ""
+featured: false
+categories: [php]
+---
+Overall the [conference](http://www.symfony-live.com/) was pretty interesting since I don't have a lot of experience with [symfony](http://www.symfony-project.org/) I learned quite a bunch of things about it's usage. I also met a lot of nice people, and ended the trip yesterday evening at the [github](http://github.com/) [meetup](http://www.symfony-live.com/github-meetup), after going for food with a couple [phpBB](http://phpbb.com) guys who are really much nicer than the forum software they stand for. They were also very open to us bashing phpBB and seem to be headed towards a [brighter future](http://area51.phpbb.com/) for the next version, which I'm sure nobody will complain about.
+
+I also had my first session at a conference, accompanying [Lukas](http://pooteeweet.org/) though so I wasn't really flying by myself yet but it was still a nice and interesting (and stressful) experience that I will try to renew. We didn't get all that much [feedback](http://joind.in/talk/view/1410/) by the way so feel free to do so (also here if you are too lazy to register on joind.in), the organizers need it and obviously I wonder how the talk was received as well.
+
+As for [Symfony 2](http://www.symfony-reloaded.org/) (which now comes with a capital S please), I kind of saw the flexibility coming since we already implemented the dependency injection container in our [Okapi framework](http://okapi.liip.ch/) at [Liip](http://liip.ch/), but I was still impressed by the jump away from symfony (1) Fabien conceded, many people would have tried to keep more BC at the cost of going forward, and I'm really glad he didn't, I think it will pay in the long run. The new version of the framework will basically be able to be totally ripped apart to fit your needs better if you have high performance requirements, which was the major pain point of symfony 1 as far as I'm concerned, and one of our reasons to keep working on Okapi which is pretty much a baseline micro-framework you can build upon. We will have to see if adopting Symfony in its place will make sense, but it sounds promising and it would offload some maintenance away from us which is always good.
+
+Obviously Symfony 2 isn't going to be stable for a while, and there are some rough edges that still need to be discussed and improved, mostly in the way bundles are handled imo, but it looks very good already and I'll definitely give it a try asap. I would also encourage everyone to do so, especially framework developers, because the dependency injection is a pretty awesome thing to have, both for the testability of code and flexibility of the development process. Although if it's your only interest in it, checking out the Okapi 2 [core](http://svn.liip.ch/repos/public/okapi2) (or the [liip.to](http://liip.to) app [ported to use it](http://svn.liip.ch/repos/public/misc/liipto/branches/okapi2/)) is probably easier as there is less code to read, and we didn't add any of the abstraction to the dependency injection layer that Symfony 2 has.
