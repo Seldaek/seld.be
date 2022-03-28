@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="description" content="It&#039;s stats o&#039;clock! See 2014, 2015 and 2016.1 for previous similar posts. A quick note on methodology, because all these stats are imperfect as they just sample some subset of the PHP user base. I look in the packagist.org logs of the last 28 days for Composer installs done by someone. Composer sends the PHP version it is running with in its User-A...">
+
+        <meta property="og:title" content="PHP Versions Stats - 2016.2 Edition | Jordi&#039;s Ramblings"/>
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="https://seld.be/notes/php-versions-stats-2016-2-edition"/>
+        <meta property="og:description" content="It&#039;s stats o&#039;clock! See 2014, 2015 and 2016.1 for previous similar posts. A quick note on methodology, because all these stats are imperfect as they just sample some subset of the PHP user base. I look in the packagist.org logs of the last 28 days for Composer installs done by someone. Composer sends the PHP version it is running with in its User-A..." />
+
+        <title>PHP Versions Stats - 2016.2 Edition | Jordi&#039;s Ramblings</title>
+
+        <link rel="home" href="https://seld.be">
+        <link rel="icon" href="/favicon.ico">
+        <link href="/feed.atom" type="application/atom+xml" rel="alternate" title="Jordi&#039;s Ramblings Atom Feed">
+
+                    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGN4JJEDTM"></script>
+            <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-QGN4JJEDTM');
+            </script>
+        
+        <!-- TODO self-host this -->
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,700,700i,800,800i" rel="stylesheet">
+        <link rel="stylesheet" href="/assets/build/css/main.css?id=917e5e1689d48eef891a">
+    </head>
+
+    <body class="flex flex-col justify-between min-h-screen text-gray-800 dark:text-green-500 leading-normal font-sans dark:font-mono bg-gray-100 dark:bg-gray-800">
+        <header class="flex items-center shadow bg-white dark:bg-gray-900 border-b dark:border-green-300 h-24 py-4" role="banner">
+            <div class="container flex items-center max-w-4xl mx-auto px-4 lg:px-8">
+                <div class="flex items-center">
+                    <a href="/" title="Jordi&#039;s Ramblings home" class="inline-flex items-center">
+                        <h1 class="text-lg md:text-2xl text-blue-800 dark:text-green-400 font-semibold hover:text-blue-600 dark:hover:text-green-200 my-0">Jordi&#039;s Ramblings</h1>
+                    </a>
+                </div>
+
+                <div id="vue-search" class="flex flex-1 justify-end items-center">
+                    <search></search>
+
+                    <nav class="hidden lg:flex items-center justify-end text-lg">
+    <a title="Jordi&#039;s Ramblings Blog" href="/notes"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400 ">
+        Blog
+    </a>
+
+    <a title="Jordi&#039;s Ramblings About" href="/about"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400 ">
+        About
+    </a>
+
+    <a title="Jordi&#039;s Ramblings Atom Feed" href="/feed.atom"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400">
+        Feed
+    </a>
+</nav>
+
+                    <button class="flex justify-center items-center bg-blue-500 border border-blue-500 dark:bg-green-400 dark:border-green-400 h-10 px-5 rounded-full lg:hidden focus:outline-none"
+    onclick="navMenu.toggle()"
+>
+    <svg id="js-nav-menu-show" xmlns="http://www.w3.org/2000/svg"
+        class="fill-current text-white h-9 w-4" viewBox="0 0 32 32"
+    >
+        <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+    </svg>
+
+    <svg id="js-nav-menu-hide" xmlns="http://www.w3.org/2000/svg"
+        class="hidden fill-current text-white h-9 w-4" viewBox="0 0 36 30"
+    >
+        <polygon points="32.8,4.4 28.6,0.2 18,10.8 7.4,0.2 3.2,4.4 13.8,15 3.2,25.6 7.4,29.8 18,19.2 28.6,29.8 32.8,25.6 22.2,15 "/>
+    </svg>
+</button>
+
+                </div>
+            </div>
+        </header>
+
+        <nav id="js-nav-menu" class="w-auto px-2 pt-6 pb-2 bg-gray-200 dark:bg-gray-700 shadow hidden lg:hidden">
+    <ul class="my-0">
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings Blog"
+                href="/notes"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >Blog</a>
+        </li>
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings About"
+                href="/about"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >About</a>
+        </li>
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings Atom Feed"
+                href="/feed.atom"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >Contact</a>
+        </li>
+    </ul>
+</nav>
+
+        <main role="main" class="flex-auto w-full container max-w-4xl mx-auto bg-white dark:bg-black mt-6 p-6">
+                
+    <h1 class="leading-none mb-2">PHP Versions Stats - 2016.2 Edition</h1>
+
+    <p class="text-gray-700 dark:text-green-700 text-xl md:mt-0">Jordi Boggiano  •  November 18, 2016</p>
+
+                        <a
+                href="/categories/php"
+                title="View posts in php"
+                class="inline-block bg-gray-300 text-gray-800 hover:bg-blue-200 dark:bg-gray-600 dark:text-green-200 dark:hover:bg-green-800 leading-loose tracking-wide uppercase text-xs font-semibold rounded mr-4 px-3 pt-px mb-10"
+            >php</a>
+            
+    <div class="border-b border-blue-200 dark:border-green-200 mb-10 pb-4" v-pre>
+        <p>It's stats o'clock! See <a href="https://seld.be/notes/my-view-of-php-version-adoption">2014</a>, <a href="https://seld.be/notes/php-versions-stats-2015-edition">2015</a> and <a href="https://seld.be/notes/php-versions-stats-2016-1-edition">2016.1</a> for previous similar posts.</p>
+
+<p>A quick note on methodology, because all these stats are imperfect as they just sample some subset of the PHP user base. I look in the <a href="https://packagist.org">packagist.org</a> logs of the last 28 days for Composer installs done by someone. Composer sends the PHP version it is running with in its <code>User-Agent</code> header, so I can use that to see which PHP versions people are using Composer with.</p>
+
+<h2>PHP usage statistics</h2>
+
+<p>I have two datasets, from May 2016 and today, which shows the progression of various versions.</p>
+
+<h3>May 2016</h3>
+
+<table> <tr> <td style="width: 90px">All versions</td> <td></td> <td style="width: 30px"></td> <td style="width: 70px">Grouped</td> <td></td> </tr> <tr> <td>PHP 5.5.9</td> <td>11.87%</td> <td></td> <td>PHP 5.6</td> <td>39.67%</td> </tr> <tr> <td>PHP 7.0.6</td> <td>10.39%</td> <td></td> <td>PHP 5.5</td> <td>29.56%</td> </tr> <tr> <td>PHP 5.6.20</td> <td>8.41%</td> <td></td> <td>PHP 7.0</td> <td>20.24%</td> </tr> <tr> <td>PHP 5.6.21</td> <td>7.69%</td> <td></td> <td>PHP 5.4</td> <td>7.64%</td> </tr> <tr> <td>PHP 5.6.19</td> <td>4.71%</td> <td></td> <td>PHP 5.3</td> <td>2.43%</td> </tr> </table>
+
+<h3>November 2016</h3>
+
+<table> <tr> <td style="width: 90px">All versions</td> <td></td> <td style="width: 30px"></td> <td style="width: 70px">Grouped</td> <td></td> </tr> <tr> <td>PHP 7.0.12</td> <td>8.58%</td> <td></td> <td>PHP 5.6</td> <td>37.46%</td> </tr> <tr> <td> PHP 5.5.9</td> <td>8.25%</td> <td></td> <td>PHP 7.0</td> <td>35.01%</td> </tr> <tr> <td>PHP 7.0.11</td> <td>7.62%</td> <td></td> <td>PHP 5.5</td> <td>18.93%</td> </tr> <tr> <td> PHP 7.0.8</td> <td>6.92%</td> <td></td> <td>PHP 5.4</td> <td>5.40%</td> </tr> <tr> <td>PHP 5.6.26</td> <td>6.12%</td> <td></td> <td>PHP 5.3</td> <td>1.60%</td> </tr> <tr> <td>PHP 5.6.27</td> <td>4.49%</td> <td></td> <td>PHP 7.1</td> <td>1.36%</td> </tr> </table>
+
+<p><img src="//seld.be/images/composer-2016-02.png" alt="" /></p>
+
+<p>A few observations: 5.3 and 5.4 at this point are gone as far as I am concerned! 5.5 still has a good presence but lost 12% in 6 months which is awesome. 5.6 basically stayed stable as I suspect people jumped from 5.5 to 7 directly probably when upgrading Ubuntu LTS. 7.0 gained 15% and is now close to being the most deployed version, 1 year after release! That should definitely encourage more libraries to require it IMO, and I hope it is good encouragement to PHP internals folks as well to see that people actually upgrade these days :) Interestingly 7.1 is almost passing 5.3 already and it isn't even released. That is probably coming from CI installs mostly but for example I already run 7.1 on my local dev environment and I hope others do too.</p>
+
+<h2>PHP requirements in Packages</h2>
+
+<p>The second dataset is which versions are required by all the PHP packages present on packagist. I only check the require statement in their current master version to see what the latest is.</p>
+
+<h3>PHP Requirements - Current Master - November 2016 (+/- diff from May 2016)</h3>
+
+<table> <tbody><tr> <td style="width: 40px">5.2</td> <td>2.35% (-0.16)</td> </tr> <tr> <td>5.3</td> <td>41.25% (-4.01)</td> </tr> <tr> <td>5.4</td> <td>30.12% (-1.57)</td> </tr> <tr> <td>5.5</td> <td>16.98% (+1.5)</td> </tr> <tr> <td>5.6</td> <td>6.22% (+2.7)</td> </tr> <tr> <td>7.0</td> <td>3.08% (+1.54)</td> </tr> </tbody></table>
+
+<p>A few observations: I don't know how else to say this but PEOPLE COME ON! This is moving waaaay slower than people are migrating their servers, and it doesn't make any sense to me. I guess there are a lot of projects out there that are somewhat stale or stable and not really changing and that makes sense, but if you still maintain a library, don't hesitate to require 7 and bump the major release at this point. You will have more fun using all the cool features of the language instead of being stuck writing <code>array()</code>.</p>
+
+<p>As I wrote in the last update: I would like to encourage everyone to be a bit more aggressive in bumping PHP requirements when tagging new major releases of their libs. Don't forget that the old code does not go away, it's still there to be used by people using legacy PHP versions.</p>
+
+<p>However it seems that a lot of people here do not read and just look at the pictures, so allow me to illustrate this last point.</p>
+
+<p><img src="//seld.be/images/update-reqs.png" alt="" /></p>
+    </div>
+
+    <nav class="flex justify-between text-sm md:text-base">
+        <div>
+                            <a href="https://seld.be/notes/typo-squatting-and-packagist" title="Older Post: Typo Squatting and Packagist">
+                    &LeftArrow; Typo Squatting and Packagist
+                </a>
+                    </div>
+
+        <div>
+                            <a href="https://seld.be/notes/php-versions-stats-2017-1-edition" title="Newer Post: PHP Versions Stats - 2017.1 Edition">
+                    PHP Versions Stats - 2017.1 Edition &RightArrow;
+                </a>
+                    </div>
+    </nav>
+        </main>
+
+        <footer class="bg-white dark:bg-gray-900 text-center text-sm mt-12 py-4" role="contentinfo">
+            <ul class="flex flex-col md:flex-row justify-center">
+                <li class="list-none md:mr-2">
+                    <a href="https://twitter.com/seldaek">Twitter</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="mailto:j.boggiano@seld.be">E-Mail</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="https://github.com/Seldaek">GitHub</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="/wishlist">Wishlist</a>
+                </li>
+                <li class="list-none">
+                    All content &copy; Jordi Boggiano 2006-2022.
+                </li>
+            </ul>
+        </footer>
+
+        <script src="/assets/build/js/main.js?id=a951a038edd7c31f0f00"></script>
+
+        <script>
+    const navMenu = {
+        toggle() {
+            const menu = document.getElementById('js-nav-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('lg:block');
+            document.getElementById('js-nav-menu-hide').classList.toggle('hidden');
+            document.getElementById('js-nav-menu-show').classList.toggle('hidden');
+        },
+    }
+</script>
+    </body>
+</html>

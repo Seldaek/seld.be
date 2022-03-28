@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="description" content="Earlier this month an article was published summarizing Nikolai Philipp Tschacher&#039;s thesis about typosquatting. In short typosquatting is a way to attack users of a package manager by registering a package with a name similar to a popular package, hoping that someone will accidentally typo the name and end up installing your version of it that cont...">
+
+        <meta property="og:title" content="Typo Squatting and Packagist | Jordi&#039;s Ramblings"/>
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="https://seld.be/notes/typo-squatting-and-packagist"/>
+        <meta property="og:description" content="Earlier this month an article was published summarizing Nikolai Philipp Tschacher&#039;s thesis about typosquatting. In short typosquatting is a way to attack users of a package manager by registering a package with a name similar to a popular package, hoping that someone will accidentally typo the name and end up installing your version of it that cont..." />
+
+        <title>Typo Squatting and Packagist | Jordi&#039;s Ramblings</title>
+
+        <link rel="home" href="https://seld.be">
+        <link rel="icon" href="/favicon.ico">
+        <link href="/feed.atom" type="application/atom+xml" rel="alternate" title="Jordi&#039;s Ramblings Atom Feed">
+
+                    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGN4JJEDTM"></script>
+            <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-QGN4JJEDTM');
+            </script>
+        
+        <!-- TODO self-host this -->
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,700,700i,800,800i" rel="stylesheet">
+        <link rel="stylesheet" href="/assets/build/css/main.css?id=917e5e1689d48eef891a">
+    </head>
+
+    <body class="flex flex-col justify-between min-h-screen text-gray-800 dark:text-green-500 leading-normal font-sans dark:font-mono bg-gray-100 dark:bg-gray-800">
+        <header class="flex items-center shadow bg-white dark:bg-gray-900 border-b dark:border-green-300 h-24 py-4" role="banner">
+            <div class="container flex items-center max-w-4xl mx-auto px-4 lg:px-8">
+                <div class="flex items-center">
+                    <a href="/" title="Jordi&#039;s Ramblings home" class="inline-flex items-center">
+                        <h1 class="text-lg md:text-2xl text-blue-800 dark:text-green-400 font-semibold hover:text-blue-600 dark:hover:text-green-200 my-0">Jordi&#039;s Ramblings</h1>
+                    </a>
+                </div>
+
+                <div id="vue-search" class="flex flex-1 justify-end items-center">
+                    <search></search>
+
+                    <nav class="hidden lg:flex items-center justify-end text-lg">
+    <a title="Jordi&#039;s Ramblings Blog" href="/notes"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400 ">
+        Blog
+    </a>
+
+    <a title="Jordi&#039;s Ramblings About" href="/about"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400 ">
+        About
+    </a>
+
+    <a title="Jordi&#039;s Ramblings Atom Feed" href="/feed.atom"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400">
+        Feed
+    </a>
+</nav>
+
+                    <button class="flex justify-center items-center bg-blue-500 border border-blue-500 dark:bg-green-400 dark:border-green-400 h-10 px-5 rounded-full lg:hidden focus:outline-none"
+    onclick="navMenu.toggle()"
+>
+    <svg id="js-nav-menu-show" xmlns="http://www.w3.org/2000/svg"
+        class="fill-current text-white h-9 w-4" viewBox="0 0 32 32"
+    >
+        <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+    </svg>
+
+    <svg id="js-nav-menu-hide" xmlns="http://www.w3.org/2000/svg"
+        class="hidden fill-current text-white h-9 w-4" viewBox="0 0 36 30"
+    >
+        <polygon points="32.8,4.4 28.6,0.2 18,10.8 7.4,0.2 3.2,4.4 13.8,15 3.2,25.6 7.4,29.8 18,19.2 28.6,29.8 32.8,25.6 22.2,15 "/>
+    </svg>
+</button>
+
+                </div>
+            </div>
+        </header>
+
+        <nav id="js-nav-menu" class="w-auto px-2 pt-6 pb-2 bg-gray-200 dark:bg-gray-700 shadow hidden lg:hidden">
+    <ul class="my-0">
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings Blog"
+                href="/notes"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >Blog</a>
+        </li>
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings About"
+                href="/about"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >About</a>
+        </li>
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings Atom Feed"
+                href="/feed.atom"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >Contact</a>
+        </li>
+    </ul>
+</nav>
+
+        <main role="main" class="flex-auto w-full container max-w-4xl mx-auto bg-white dark:bg-black mt-6 p-6">
+                
+    <h1 class="leading-none mb-2">Typo Squatting and Packagist</h1>
+
+    <p class="text-gray-700 dark:text-green-700 text-xl md:mt-0">Jordi Boggiano  •  June 30, 2016</p>
+
+                        <a
+                href="/categories/php"
+                title="View posts in php"
+                class="inline-block bg-gray-300 text-gray-800 hover:bg-blue-200 dark:bg-gray-600 dark:text-green-200 dark:hover:bg-green-800 leading-loose tracking-wide uppercase text-xs font-semibold rounded mr-4 px-3 pt-px mb-10"
+            >php</a>
+            
+    <div class="border-b border-blue-200 dark:border-green-200 mb-10 pb-4" v-pre>
+        <p>Earlier this month <a href="http://incolumitas.com/2016/06/08/typosquatting-package-managers/">an article</a> was published summarizing Nikolai Philipp Tschacher's thesis about typosquatting. In short typosquatting is a way to attack users of a package manager by registering a package with a name similar to a popular package, hoping that someone will accidentally typo the name and end up installing your version of it that contains malware.</p>
+
+<p>The thesis mentions https://packagist.org as a good example as we use vendor namespaces:</p>
+
+<blockquote>
+  <p>&#91;...&#93; it is much more secure, if a package is named ntschacher/GoogleScraper instead of just GoogleScraper. The reason is: If the package name is misspelled and not the author name, this will not have any consequences, because the typo version cannot be registered in this namespace, since this author name is already reserved. &#91;...&#93; Because package names are much longer with two attributes, it is more likely that users will copy and paste the package name instead of remembering it.</p>
+</blockquote>
+
+<p>Despite this mitigating fact, it is still technically possible to squat the vendor name, so I wanted to take a look at our repository data and see if I could spot any bad actors. I wrote a script that basically does the following:</p>
+
+<ul>
+<li>Read the list of all vendor names which have packages with at least 1000 downloads, as the others are unlikely targets or at least low value targets.</li>
+<li>Check the <a href="http://php.net/levenshtein">levenshtein distance</a> of every vendor name against all others.</li>
+<li>If the distance is 1, then it checks for package names within those two vendors to see if they have any intersecting names. Those are then candidates for being typosquatters.</li>
+</ul>
+
+<p>What did I find? <a href="https://gist.github.com/Seldaek/491543d86b0d902fab9cb2b540bc85d9">21 vendor pairs</a> that conflict to some degree. Only one that looked like an actual typosquatting attempt, <code>momolog/monolog</code>, and it even had in the package description that it was a demonstration of typosquatting. I deleted it along with 5 others packages that were useless, but the others are still in place. A lot of it is just due to people renaming their vendor names, or simply people that picked similar names but don't seem to be abusing anything.</p>
+
+<p>In the future it would be nice to automate this, or prevent the creation of vendors that are too similar to popular ones. However it is reassuring to see that there is no widespread abuse going on.</p>
+    </div>
+
+    <nav class="flex justify-between text-sm md:text-base">
+        <div>
+                            <a href="https://seld.be/notes/php-versions-stats-2016-1-edition" title="Older Post: PHP Versions Stats - 2016.1 Edition">
+                    &LeftArrow; PHP Versions Stats - 2016.1 Edition
+                </a>
+                    </div>
+
+        <div>
+                            <a href="https://seld.be/notes/php-versions-stats-2016-2-edition" title="Newer Post: PHP Versions Stats - 2016.2 Edition">
+                    PHP Versions Stats - 2016.2 Edition &RightArrow;
+                </a>
+                    </div>
+    </nav>
+        </main>
+
+        <footer class="bg-white dark:bg-gray-900 text-center text-sm mt-12 py-4" role="contentinfo">
+            <ul class="flex flex-col md:flex-row justify-center">
+                <li class="list-none md:mr-2">
+                    <a href="https://twitter.com/seldaek">Twitter</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="mailto:j.boggiano@seld.be">E-Mail</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="https://github.com/Seldaek">GitHub</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="/wishlist">Wishlist</a>
+                </li>
+                <li class="list-none">
+                    All content &copy; Jordi Boggiano 2006-2022.
+                </li>
+            </ul>
+        </footer>
+
+        <script src="/assets/build/js/main.js?id=a951a038edd7c31f0f00"></script>
+
+        <script>
+    const navMenu = {
+        toggle() {
+            const menu = document.getElementById('js-nav-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('lg:block');
+            document.getElementById('js-nav-menu-hide').classList.toggle('hidden');
+            document.getElementById('js-nav-menu-show').classList.toggle('hidden');
+        },
+    }
+</script>
+    </body>
+</html>

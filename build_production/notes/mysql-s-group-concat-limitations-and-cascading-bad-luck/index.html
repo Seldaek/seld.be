@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="description" content="We had an incident today over at Teamup (where I have worked for the last 9 months by the way:) which is worth a quick blog post if it helps save anyone from having a bad day. We are using MySQL&#039;s GROUP_CONCAT feature to fetch a list of ids to delete when cleaning up old demo calendars. You end up with a list of ids in one row it&#039;s easy to fetch, s...">
+
+        <meta property="og:title" content="MySQL&#039;s GROUP_CONCAT limitations and cascading bad luck | Jordi&#039;s Ramblings"/>
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="https://seld.be/notes/mysql-s-group-concat-limitations-and-cascading-bad-luck"/>
+        <meta property="og:description" content="We had an incident today over at Teamup (where I have worked for the last 9 months by the way:) which is worth a quick blog post if it helps save anyone from having a bad day. We are using MySQL&#039;s GROUP_CONCAT feature to fetch a list of ids to delete when cleaning up old demo calendars. You end up with a list of ids in one row it&#039;s easy to fetch, s..." />
+
+        <title>MySQL&#039;s GROUP_CONCAT limitations and cascading bad luck | Jordi&#039;s Ramblings</title>
+
+        <link rel="home" href="https://seld.be">
+        <link rel="icon" href="/favicon.ico">
+        <link href="/feed.atom" type="application/atom+xml" rel="alternate" title="Jordi&#039;s Ramblings Atom Feed">
+
+                    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGN4JJEDTM"></script>
+            <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-QGN4JJEDTM');
+            </script>
+        
+        <!-- TODO self-host this -->
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,700,700i,800,800i" rel="stylesheet">
+        <link rel="stylesheet" href="/assets/build/css/main.css?id=917e5e1689d48eef891a">
+    </head>
+
+    <body class="flex flex-col justify-between min-h-screen text-gray-800 dark:text-green-500 leading-normal font-sans dark:font-mono bg-gray-100 dark:bg-gray-800">
+        <header class="flex items-center shadow bg-white dark:bg-gray-900 border-b dark:border-green-300 h-24 py-4" role="banner">
+            <div class="container flex items-center max-w-4xl mx-auto px-4 lg:px-8">
+                <div class="flex items-center">
+                    <a href="/" title="Jordi&#039;s Ramblings home" class="inline-flex items-center">
+                        <h1 class="text-lg md:text-2xl text-blue-800 dark:text-green-400 font-semibold hover:text-blue-600 dark:hover:text-green-200 my-0">Jordi&#039;s Ramblings</h1>
+                    </a>
+                </div>
+
+                <div id="vue-search" class="flex flex-1 justify-end items-center">
+                    <search></search>
+
+                    <nav class="hidden lg:flex items-center justify-end text-lg">
+    <a title="Jordi&#039;s Ramblings Blog" href="/notes"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400 ">
+        Blog
+    </a>
+
+    <a title="Jordi&#039;s Ramblings About" href="/about"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400 ">
+        About
+    </a>
+
+    <a title="Jordi&#039;s Ramblings Atom Feed" href="/feed.atom"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400">
+        Feed
+    </a>
+</nav>
+
+                    <button class="flex justify-center items-center bg-blue-500 border border-blue-500 dark:bg-green-400 dark:border-green-400 h-10 px-5 rounded-full lg:hidden focus:outline-none"
+    onclick="navMenu.toggle()"
+>
+    <svg id="js-nav-menu-show" xmlns="http://www.w3.org/2000/svg"
+        class="fill-current text-white h-9 w-4" viewBox="0 0 32 32"
+    >
+        <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+    </svg>
+
+    <svg id="js-nav-menu-hide" xmlns="http://www.w3.org/2000/svg"
+        class="hidden fill-current text-white h-9 w-4" viewBox="0 0 36 30"
+    >
+        <polygon points="32.8,4.4 28.6,0.2 18,10.8 7.4,0.2 3.2,4.4 13.8,15 3.2,25.6 7.4,29.8 18,19.2 28.6,29.8 32.8,25.6 22.2,15 "/>
+    </svg>
+</button>
+
+                </div>
+            </div>
+        </header>
+
+        <nav id="js-nav-menu" class="w-auto px-2 pt-6 pb-2 bg-gray-200 dark:bg-gray-700 shadow hidden lg:hidden">
+    <ul class="my-0">
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings Blog"
+                href="/notes"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >Blog</a>
+        </li>
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings About"
+                href="/about"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >About</a>
+        </li>
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings Atom Feed"
+                href="/feed.atom"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >Contact</a>
+        </li>
+    </ul>
+</nav>
+
+        <main role="main" class="flex-auto w-full container max-w-4xl mx-auto bg-white dark:bg-black mt-6 p-6">
+                
+    <h1 class="leading-none mb-2">MySQL&#039;s GROUP_CONCAT limitations and cascading bad luck</h1>
+
+    <p class="text-gray-700 dark:text-green-700 text-xl md:mt-0">Jordi Boggiano  •  August 11, 2015</p>
+
+                        <a
+                href="/categories/php"
+                title="View posts in php"
+                class="inline-block bg-gray-300 text-gray-800 hover:bg-blue-200 dark:bg-gray-600 dark:text-green-200 dark:hover:bg-green-800 leading-loose tracking-wide uppercase text-xs font-semibold rounded mr-4 px-3 pt-px mb-10"
+            >php</a>
+                    <a
+                href="/categories/web"
+                title="View posts in web"
+                class="inline-block bg-gray-300 text-gray-800 hover:bg-blue-200 dark:bg-gray-600 dark:text-green-200 dark:hover:bg-green-800 leading-loose tracking-wide uppercase text-xs font-semibold rounded mr-4 px-3 pt-px mb-10"
+            >web</a>
+            
+    <div class="border-b border-blue-200 dark:border-green-200 mb-10 pb-4" v-pre>
+        <p>We had an incident today over at <a href="http://www.teamup.com/">Teamup</a> (where I have worked for the last 9 months by the way:) which is worth a quick blog post if it helps save anyone from having a bad day.</p>
+
+<p>We are using MySQL's <a href="https://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html#function_group-concat">GROUP&#95;CONCAT</a> feature to fetch a list of ids to delete when cleaning up old demo calendars. You end up with a list of ids in one row, easy to fetch, split it on commas, and done. So far so good. Then we run a few <code>DELETE ... WHERE id IN (...)</code> queries to clean things up in a few tables. So far so good.</p>
+
+<p>However if you fail to read the fine print on the MySQL docs, you might not have seen this sentence: <em>The result is truncated to the maximum length that is given by the group&#95;concat&#95;max&#95;len system variable, which has a default value of 1024.</em> What this means is that a query that worked just fine in testing conditions, suddenly started failing in production once the data set hit a critical size. Thanks to another stroke of bad luck, it returned a list of ids truncated right after a comma (<code>3,4,5,</code>) so we had an empty id in our <code>WHERE IN (3,4,5,)</code> clause. Unfortunately combined with the fact we had optional relations in some tables (I won't bore you with details) that empty match made it wipe about 60% of the data in those.</p>
+
+<p>Thankfully we have backups on top of the DB replication which let us recover the lost data pretty quickly, and it only affected a small feature in the grand scale of things, but this could have ended much worse so it is worth pointing out a few things:</p>
+
+<ul>
+<li>If you use GROUP&#95;CONCAT and expect large amounts of data returned, make sure to increase the limit before executing your query. For example this sets both the <a href="https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_group_concat_max_len">max length for the group concat</a> and the <a href="https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_max_allowed_packet">max packet length</a> (which caps the former) to 10MB <code>SET SESSION group_concat_max_len = 10485760, SESSION  max_allowed_packet = 10485760;</code>. Use more if you think you need more.</li>
+<li>Maybe for safety using GROUP&#95;CONCAT should be avoided if you don't know how much data to expect, simply fetching ids and then fetching all rows at the program level does the job too.</li>
+<li>Do snapshot backups even if you have replication in place, it can save your ass!</li>
+</ul>
+
+<p>And now to hope for a more quiet rest of the week!</p>
+
+<p>Edit: There is some good news, MySQL 5.8 might include a fix and turn the current warning for truncation into an error, see <a href="http://bugs.mysql.com/bug.php?id=78041">http://bugs.mysql.com/bug.php?id=78041</a></p>
+    </div>
+
+    <nav class="flex justify-between text-sm md:text-base">
+        <div>
+                            <a href="https://seld.be/notes/20-years-and-9-days-of-php" title="Older Post: 20 Years and 9 Days of PHP">
+                    &LeftArrow; 20 Years and 9 Days of PHP
+                </a>
+                    </div>
+
+        <div>
+                            <a href="https://seld.be/notes/php-versions-stats-2015-edition" title="Newer Post: PHP Versions Stats - 2015 Edition">
+                    PHP Versions Stats - 2015 Edition &RightArrow;
+                </a>
+                    </div>
+    </nav>
+        </main>
+
+        <footer class="bg-white dark:bg-gray-900 text-center text-sm mt-12 py-4" role="contentinfo">
+            <ul class="flex flex-col md:flex-row justify-center">
+                <li class="list-none md:mr-2">
+                    <a href="https://twitter.com/seldaek">Twitter</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="mailto:j.boggiano@seld.be">E-Mail</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="https://github.com/Seldaek">GitHub</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="/wishlist">Wishlist</a>
+                </li>
+                <li class="list-none">
+                    All content &copy; Jordi Boggiano 2006-2022.
+                </li>
+            </ul>
+        </footer>
+
+        <script src="/assets/build/js/main.js?id=a951a038edd7c31f0f00"></script>
+
+        <script>
+    const navMenu = {
+        toggle() {
+            const menu = document.getElementById('js-nav-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('lg:block');
+            document.getElementById('js-nav-menu-hide').classList.toggle('hidden');
+            document.getElementById('js-nav-menu-show').classList.toggle('hidden');
+        },
+    }
+</script>
+    </body>
+</html>

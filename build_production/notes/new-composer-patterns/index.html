@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="description" content="Here is a short update on some nice little features that have become available in the last few months in Composer. Checking dependencies for bad patterns You may know about the composer validate command, but did you know about its new --with-dependencies / -A flag? It lets you validate both your project and all your dependencies at once! This is qu...">
+
+        <meta property="og:title" content="New Composer Patterns | Jordi&#039;s Ramblings"/>
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="https://seld.be/notes/new-composer-patterns"/>
+        <meta property="og:description" content="Here is a short update on some nice little features that have become available in the last few months in Composer. Checking dependencies for bad patterns You may know about the composer validate command, but did you know about its new --with-dependencies / -A flag? It lets you validate both your project and all your dependencies at once! This is qu..." />
+
+        <title>New Composer Patterns | Jordi&#039;s Ramblings</title>
+
+        <link rel="home" href="https://seld.be">
+        <link rel="icon" href="/favicon.ico">
+        <link href="/feed.atom" type="application/atom+xml" rel="alternate" title="Jordi&#039;s Ramblings Atom Feed">
+
+                    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGN4JJEDTM"></script>
+            <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-QGN4JJEDTM');
+            </script>
+        
+        <!-- TODO self-host this -->
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,700,700i,800,800i" rel="stylesheet">
+        <link rel="stylesheet" href="/assets/build/css/main.css?id=917e5e1689d48eef891a">
+    </head>
+
+    <body class="flex flex-col justify-between min-h-screen text-gray-800 dark:text-green-500 leading-normal font-sans dark:font-mono bg-gray-100 dark:bg-gray-800">
+        <header class="flex items-center shadow bg-white dark:bg-gray-900 border-b dark:border-green-300 h-24 py-4" role="banner">
+            <div class="container flex items-center max-w-4xl mx-auto px-4 lg:px-8">
+                <div class="flex items-center">
+                    <a href="/" title="Jordi&#039;s Ramblings home" class="inline-flex items-center">
+                        <h1 class="text-lg md:text-2xl text-blue-800 dark:text-green-400 font-semibold hover:text-blue-600 dark:hover:text-green-200 my-0">Jordi&#039;s Ramblings</h1>
+                    </a>
+                </div>
+
+                <div id="vue-search" class="flex flex-1 justify-end items-center">
+                    <search></search>
+
+                    <nav class="hidden lg:flex items-center justify-end text-lg">
+    <a title="Jordi&#039;s Ramblings Blog" href="/notes"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400 ">
+        Blog
+    </a>
+
+    <a title="Jordi&#039;s Ramblings About" href="/about"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400 ">
+        About
+    </a>
+
+    <a title="Jordi&#039;s Ramblings Atom Feed" href="/feed.atom"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400">
+        Feed
+    </a>
+</nav>
+
+                    <button class="flex justify-center items-center bg-blue-500 border border-blue-500 dark:bg-green-400 dark:border-green-400 h-10 px-5 rounded-full lg:hidden focus:outline-none"
+    onclick="navMenu.toggle()"
+>
+    <svg id="js-nav-menu-show" xmlns="http://www.w3.org/2000/svg"
+        class="fill-current text-white h-9 w-4" viewBox="0 0 32 32"
+    >
+        <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+    </svg>
+
+    <svg id="js-nav-menu-hide" xmlns="http://www.w3.org/2000/svg"
+        class="hidden fill-current text-white h-9 w-4" viewBox="0 0 36 30"
+    >
+        <polygon points="32.8,4.4 28.6,0.2 18,10.8 7.4,0.2 3.2,4.4 13.8,15 3.2,25.6 7.4,29.8 18,19.2 28.6,29.8 32.8,25.6 22.2,15 "/>
+    </svg>
+</button>
+
+                </div>
+            </div>
+        </header>
+
+        <nav id="js-nav-menu" class="w-auto px-2 pt-6 pb-2 bg-gray-200 dark:bg-gray-700 shadow hidden lg:hidden">
+    <ul class="my-0">
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings Blog"
+                href="/notes"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >Blog</a>
+        </li>
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings About"
+                href="/about"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >About</a>
+        </li>
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings Atom Feed"
+                href="/feed.atom"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >Contact</a>
+        </li>
+    </ul>
+</nav>
+
+        <main role="main" class="flex-auto w-full container max-w-4xl mx-auto bg-white dark:bg-black mt-6 p-6">
+                
+    <h1 class="leading-none mb-2">New Composer Patterns</h1>
+
+    <p class="text-gray-700 dark:text-green-700 text-xl md:mt-0">Jordi Boggiano  •  December 18, 2015</p>
+
+                        <a
+                href="/categories/news"
+                title="View posts in news"
+                class="inline-block bg-gray-300 text-gray-800 hover:bg-blue-200 dark:bg-gray-600 dark:text-green-200 dark:hover:bg-green-800 leading-loose tracking-wide uppercase text-xs font-semibold rounded mr-4 px-3 pt-px mb-10"
+            >news</a>
+                    <a
+                href="/categories/php"
+                title="View posts in php"
+                class="inline-block bg-gray-300 text-gray-800 hover:bg-blue-200 dark:bg-gray-600 dark:text-green-200 dark:hover:bg-green-800 leading-loose tracking-wide uppercase text-xs font-semibold rounded mr-4 px-3 pt-px mb-10"
+            >php</a>
+            
+    <div class="border-b border-blue-200 dark:border-green-200 mb-10 pb-4" v-pre>
+        <p>Here is a short update on some nice little features that have become available in the last year in <a href="https://getcomposer.org">Composer</a>.</p>
+
+<h2>Checking dependencies for bad patterns</h2>
+
+<p>You may know about the <code>composer validate</code> command, but did you know about its new <code>--with-dependencies / -A</code> flag? It lets you validate both your project and all your dependencies at once!</p>
+
+<p>This is quite nice to check if any of your dependencies has unsafe requirements like <code>&gt;=</code> or similar issues. You can also combine it with <code>--strict</code> to make sure that any warning results in a failure exit code, so you can detect warnings in your CI builds for example by checking the command exit code.</p>
+
+<p>Try it out: <code>composer validate -A --strict</code></p>
+
+<h2>Referencing scripts to avoid duplication</h2>
+
+<p>You can now reference other scripts by name to avoid having to define the exact same script command in multiple places (e.g. post-update-cmd and post-install-cmd is a common pattern). See <a href="https://getcomposer.org/doc/articles/scripts.md#referencing-scripts">the docs</a> for an example. This could be applied to <a href="https://github.com/symfony/symfony-standard/blob/22ec5ec332569d44170b0e69c81a238162e7df5d/composer.json#L30-L45">the symfony standard composer.json</a> for example. The referenced script can even be array of scripts!</p>
+
+<h2>Defining your target production environment in composer.json</h2>
+
+<p>The <code>config.platform</code> option lets you emulate which platform packages you have available on your prod environment. That way even if you have a more recent PHP version or are missing an extension locally for example, composer will always resolve packages assuming that you have the packages you declared installed.</p>
+
+<p>Let's take a concrete example. If I am running PHP 5.6 in production but use PHP 7 to develop on my machine, I might end up installing a package that depends on PHP 7 and not notice the problem until I deploy and things break on the server. Obviously it is better to develop with the exact same versions to avoid any surprises but this isn't always practical and especially when working on open source libraries I think many don't use VMs but instead work with whatever PHP they have on their host system.</p>
+
+<p>In Composer for example we want to guarantee that we at least work with php5.3, so <a href="https://github.com/composer/composer/blob/e87190e/composer.json#L44">we tell Composer to fake the PHP version to be 5.3.9</a> when running updates, no matter what PHP version you run it with. If we did not do this for example the symfony/console package we depend on would upgrade to v3, but as symfony/console v3 requires at least PHP 5.5 it does not happen thanks to the platform config.</p>
+
+<h2>Excluding paths from the optimized classmap</h2>
+
+<p>When you run <code>composer dump-autoload -o</code> to get an optimized autoloader, Composer scans all files and builds a huge classmap, even for packages that define autoload rules as psr-0 or psr-4. This is great but in some cases you have some classes in the psr-4 path that you actually don't want to be included in this optimized map. One typical example of this would be <a href="https://github.com/nelmio/NelmioCorsBundle/tree/fa14a81">Symfony2 bundles</a> that follow the best practices layout of having all sources at the root of the repo. In this case the psr-4 path is "" (repo root) and there is a Tests/ folder which contains the test classes. Obviously in production we don't want to include those test classes in the optimized class map as it is just a waste. Adding the second line here to the autoload config will make sure they are not included:</p>
+
+<p>```</p>
+
+<p>"autoload": {
+    "psr-4": { "Nelmio&#92;CorsBundle&#92;": "" },
+    "exclude-from-classmap": ["/Tests/"]
+},
+```</p>
+
+<h2>Requiring packages easily and safely</h2>
+
+<p>For quite a while now we have had the ability of running <code>composer require some/package</code> without specifying the version and Composer just figures out the best requirement for you. However this came with a catch, as it always picked the latest version available. This usually works but if the latest version requires a newer PHP version than what you have on your machine it would actually fail. I fixed that and it now looks at your PHP version (or <code>config.platform.php</code> value) to determine which is the best version to install. This is great because it enables package authors to require PHP 7 in their new package version for example and anyone using <code>composer require</code> will not accidentally get this newer version installed until they are ready and using PHP 7 themselves. More on that note soon!</p>
+
+<p>I hope these tips helped bring a bit more attention to those cool new features we have added!</p>
+    </div>
+
+    <nav class="flex justify-between text-sm md:text-base">
+        <div>
+                            <a href="https://seld.be/notes/php-versions-stats-2015-edition" title="Older Post: PHP Versions Stats - 2015 Edition">
+                    &LeftArrow; PHP Versions Stats - 2015 Edition
+                </a>
+                    </div>
+
+        <div>
+                            <a href="https://seld.be/notes/the-road-to-monolog-2-0" title="Newer Post: The Road to Monolog 2.0">
+                    The Road to Monolog 2.0 &RightArrow;
+                </a>
+                    </div>
+    </nav>
+        </main>
+
+        <footer class="bg-white dark:bg-gray-900 text-center text-sm mt-12 py-4" role="contentinfo">
+            <ul class="flex flex-col md:flex-row justify-center">
+                <li class="list-none md:mr-2">
+                    <a href="https://twitter.com/seldaek">Twitter</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="mailto:j.boggiano@seld.be">E-Mail</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="https://github.com/Seldaek">GitHub</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="/wishlist">Wishlist</a>
+                </li>
+                <li class="list-none">
+                    All content &copy; Jordi Boggiano 2006-2022.
+                </li>
+            </ul>
+        </footer>
+
+        <script src="/assets/build/js/main.js?id=a951a038edd7c31f0f00"></script>
+
+        <script>
+    const navMenu = {
+        toggle() {
+            const menu = document.getElementById('js-nav-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('lg:block');
+            document.getElementById('js-nav-menu-hide').classList.toggle('hidden');
+            document.getElementById('js-nav-menu-show').classList.toggle('hidden');
+        },
+    }
+</script>
+    </body>
+</html>

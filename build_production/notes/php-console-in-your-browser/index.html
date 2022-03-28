@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="description" content="So-called interactive modes for scripting languages are commonly used in the command line, and they are great for quick tests, but most of the time when I try something it tends to grow and quickly becomes painful to handle in a CLI one-liner. Since I spend most of my days programming PHP I tend to need that a lot and a few years back I wrote a sma...">
+
+        <meta property="og:title" content="PHP Console in Your Browser | Jordi&#039;s Ramblings"/>
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="https://seld.be/notes/php-console-in-your-browser"/>
+        <meta property="og:description" content="So-called interactive modes for scripting languages are commonly used in the command line, and they are great for quick tests, but most of the time when I try something it tends to grow and quickly becomes painful to handle in a CLI one-liner. Since I spend most of my days programming PHP I tend to need that a lot and a few years back I wrote a sma..." />
+
+        <title>PHP Console in Your Browser | Jordi&#039;s Ramblings</title>
+
+        <link rel="home" href="https://seld.be">
+        <link rel="icon" href="/favicon.ico">
+        <link href="/feed.atom" type="application/atom+xml" rel="alternate" title="Jordi&#039;s Ramblings Atom Feed">
+
+                    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGN4JJEDTM"></script>
+            <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-QGN4JJEDTM');
+            </script>
+        
+        <!-- TODO self-host this -->
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,700,700i,800,800i" rel="stylesheet">
+        <link rel="stylesheet" href="/assets/build/css/main.css?id=917e5e1689d48eef891a">
+    </head>
+
+    <body class="flex flex-col justify-between min-h-screen text-gray-800 dark:text-green-500 leading-normal font-sans dark:font-mono bg-gray-100 dark:bg-gray-800">
+        <header class="flex items-center shadow bg-white dark:bg-gray-900 border-b dark:border-green-300 h-24 py-4" role="banner">
+            <div class="container flex items-center max-w-4xl mx-auto px-4 lg:px-8">
+                <div class="flex items-center">
+                    <a href="/" title="Jordi&#039;s Ramblings home" class="inline-flex items-center">
+                        <h1 class="text-lg md:text-2xl text-blue-800 dark:text-green-400 font-semibold hover:text-blue-600 dark:hover:text-green-200 my-0">Jordi&#039;s Ramblings</h1>
+                    </a>
+                </div>
+
+                <div id="vue-search" class="flex flex-1 justify-end items-center">
+                    <search></search>
+
+                    <nav class="hidden lg:flex items-center justify-end text-lg">
+    <a title="Jordi&#039;s Ramblings Blog" href="/notes"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400 ">
+        Blog
+    </a>
+
+    <a title="Jordi&#039;s Ramblings About" href="/about"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400 ">
+        About
+    </a>
+
+    <a title="Jordi&#039;s Ramblings Atom Feed" href="/feed.atom"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400">
+        Feed
+    </a>
+</nav>
+
+                    <button class="flex justify-center items-center bg-blue-500 border border-blue-500 dark:bg-green-400 dark:border-green-400 h-10 px-5 rounded-full lg:hidden focus:outline-none"
+    onclick="navMenu.toggle()"
+>
+    <svg id="js-nav-menu-show" xmlns="http://www.w3.org/2000/svg"
+        class="fill-current text-white h-9 w-4" viewBox="0 0 32 32"
+    >
+        <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+    </svg>
+
+    <svg id="js-nav-menu-hide" xmlns="http://www.w3.org/2000/svg"
+        class="hidden fill-current text-white h-9 w-4" viewBox="0 0 36 30"
+    >
+        <polygon points="32.8,4.4 28.6,0.2 18,10.8 7.4,0.2 3.2,4.4 13.8,15 3.2,25.6 7.4,29.8 18,19.2 28.6,29.8 32.8,25.6 22.2,15 "/>
+    </svg>
+</button>
+
+                </div>
+            </div>
+        </header>
+
+        <nav id="js-nav-menu" class="w-auto px-2 pt-6 pb-2 bg-gray-200 dark:bg-gray-700 shadow hidden lg:hidden">
+    <ul class="my-0">
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings Blog"
+                href="/notes"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >Blog</a>
+        </li>
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings About"
+                href="/about"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >About</a>
+        </li>
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings Atom Feed"
+                href="/feed.atom"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >Contact</a>
+        </li>
+    </ul>
+</nav>
+
+        <main role="main" class="flex-auto w-full container max-w-4xl mx-auto bg-white dark:bg-black mt-6 p-6">
+                
+    <h1 class="leading-none mb-2">PHP Console in Your Browser</h1>
+
+    <p class="text-gray-700 dark:text-green-700 text-xl md:mt-0">Jordi Boggiano  •  September 23, 2010</p>
+
+                        <a
+                href="/categories/php"
+                title="View posts in php"
+                class="inline-block bg-gray-300 text-gray-800 hover:bg-blue-200 dark:bg-gray-600 dark:text-green-200 dark:hover:bg-green-800 leading-loose tracking-wide uppercase text-xs font-semibold rounded mr-4 px-3 pt-px mb-10"
+            >php</a>
+            
+    <div class="border-b border-blue-200 dark:border-green-200 mb-10 pb-4" v-pre>
+        <p>So-called interactive modes for scripting languages are commonly used in the command line, and they are great for quick tests, but most of the time when I try something it tends to grow and quickly becomes painful to handle in a CLI one-liner.</p>
+
+<p>Since I spend most of my days programming PHP I tend to need that a lot and a few years back I wrote a small script that would let me type php code in my browser and execute it. Nothing fancy, but quite useful.</p>
+
+<p>Over the years a few people got interest seeing me use it and asked for the sources, so instead of repackaging it every time, I thought I'd clean it up, polish a bit, add some features, and put it on github.</p>
+
+<p>I can't really let you try it on my website for the obvious security implications, but you can look at the screenshot below or to get your hands on it more directly head to <a href="http://github.com/seldaek/php-console">github (seldaek/php-console)</a> or grab the <a href="http://github.com/Seldaek/php-console/zipball/master">zip archive</a>.</p>
+
+<p>Setup is easy, just put it somewhere, and run it in a browser. It only works from localhost, so it's as secure as your machine is, and I can't be held responsible for anything.</p>
+
+<p>It fetches the execution result with javascript so you can even die() in the script with no problem, and expands tabs to spaces. Press ctrl-enter to submit from the textarea.</p>
+
+<p><img src="http://seld.be/_misc/php-console.png" alt="" /></p>
+
+<p>What do you think?</p>
+    </div>
+
+    <nav class="flex justify-between text-sm md:text-base">
+        <div>
+                            <a href="https://seld.be/notes/switching-on-my-wlan-with-my-phone" title="Older Post: Switching on my WLAN with my phone">
+                    &LeftArrow; Switching on my WLAN with my phone
+                </a>
+                    </div>
+
+        <div>
+                            <a href="https://seld.be/notes/symfony2-presentation" title="Newer Post: Symfony2 Presentation">
+                    Symfony2 Presentation &RightArrow;
+                </a>
+                    </div>
+    </nav>
+        </main>
+
+        <footer class="bg-white dark:bg-gray-900 text-center text-sm mt-12 py-4" role="contentinfo">
+            <ul class="flex flex-col md:flex-row justify-center">
+                <li class="list-none md:mr-2">
+                    <a href="https://twitter.com/seldaek">Twitter</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="mailto:j.boggiano@seld.be">E-Mail</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="https://github.com/Seldaek">GitHub</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="/wishlist">Wishlist</a>
+                </li>
+                <li class="list-none">
+                    All content &copy; Jordi Boggiano 2006-2022.
+                </li>
+            </ul>
+        </footer>
+
+        <script src="/assets/build/js/main.js?id=a951a038edd7c31f0f00"></script>
+
+        <script>
+    const navMenu = {
+        toggle() {
+            const menu = document.getElementById('js-nav-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('lg:block');
+            document.getElementById('js-nav-menu-hide').classList.toggle('hidden');
+            document.getElementById('js-nav-menu-show').classList.toggle('hidden');
+        },
+    }
+</script>
+    </body>
+</html>

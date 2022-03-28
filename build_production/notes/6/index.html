@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="description" content="The list of blog posts">
+
+        <meta property="og:title" content="Blog | Jordi&#039;s Ramblings"/>
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://seld.be/notes/6"/>
+        <meta property="og:description" content="The list of blog posts" />
+
+        <title>Blog | Jordi&#039;s Ramblings</title>
+
+        <link rel="home" href="https://seld.be">
+        <link rel="icon" href="/favicon.ico">
+        <link href="/feed.atom" type="application/atom+xml" rel="alternate" title="Jordi&#039;s Ramblings Atom Feed">
+
+                    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGN4JJEDTM"></script>
+            <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-QGN4JJEDTM');
+            </script>
+        
+        <!-- TODO self-host this -->
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,700,700i,800,800i" rel="stylesheet">
+        <link rel="stylesheet" href="/assets/build/css/main.css?id=917e5e1689d48eef891a">
+    </head>
+
+    <body class="flex flex-col justify-between min-h-screen text-gray-800 dark:text-green-500 leading-normal font-sans dark:font-mono bg-gray-100 dark:bg-gray-800">
+        <header class="flex items-center shadow bg-white dark:bg-gray-900 border-b dark:border-green-300 h-24 py-4" role="banner">
+            <div class="container flex items-center max-w-4xl mx-auto px-4 lg:px-8">
+                <div class="flex items-center">
+                    <a href="/" title="Jordi&#039;s Ramblings home" class="inline-flex items-center">
+                        <h1 class="text-lg md:text-2xl text-blue-800 dark:text-green-400 font-semibold hover:text-blue-600 dark:hover:text-green-200 my-0">Jordi&#039;s Ramblings</h1>
+                    </a>
+                </div>
+
+                <div id="vue-search" class="flex flex-1 justify-end items-center">
+                    <search></search>
+
+                    <nav class="hidden lg:flex items-center justify-end text-lg">
+    <a title="Jordi&#039;s Ramblings Blog" href="/notes"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400 ">
+        Blog
+    </a>
+
+    <a title="Jordi&#039;s Ramblings About" href="/about"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400 ">
+        About
+    </a>
+
+    <a title="Jordi&#039;s Ramblings Atom Feed" href="/feed.atom"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400">
+        Feed
+    </a>
+</nav>
+
+                    <button class="flex justify-center items-center bg-blue-500 border border-blue-500 dark:bg-green-400 dark:border-green-400 h-10 px-5 rounded-full lg:hidden focus:outline-none"
+    onclick="navMenu.toggle()"
+>
+    <svg id="js-nav-menu-show" xmlns="http://www.w3.org/2000/svg"
+        class="fill-current text-white h-9 w-4" viewBox="0 0 32 32"
+    >
+        <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+    </svg>
+
+    <svg id="js-nav-menu-hide" xmlns="http://www.w3.org/2000/svg"
+        class="hidden fill-current text-white h-9 w-4" viewBox="0 0 36 30"
+    >
+        <polygon points="32.8,4.4 28.6,0.2 18,10.8 7.4,0.2 3.2,4.4 13.8,15 3.2,25.6 7.4,29.8 18,19.2 28.6,29.8 32.8,25.6 22.2,15 "/>
+    </svg>
+</button>
+
+                </div>
+            </div>
+        </header>
+
+        <nav id="js-nav-menu" class="w-auto px-2 pt-6 pb-2 bg-gray-200 dark:bg-gray-700 shadow hidden lg:hidden">
+    <ul class="my-0">
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings Blog"
+                href="/notes"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >Blog</a>
+        </li>
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings About"
+                href="/about"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >About</a>
+        </li>
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings Atom Feed"
+                href="/feed.atom"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >Contact</a>
+        </li>
+    </ul>
+</nav>
+
+        <main role="main" class="flex-auto w-full container max-w-4xl mx-auto bg-white dark:bg-black mt-6 p-6">
+                        <div class="flex flex-col mb-4">
+    <p class="text-gray-700 dark:text-green-500 font-medium my-2">
+        August 2, 2008
+    </p>
+
+    <h2 class="text-3xl mt-0">
+        <a
+            href="https://seld.be/notes/installing-habari-on-lighttpd"
+            title="Read more - Installing Habari on Lighttpd"
+            class="text-gray-900 dark:text-green-500 font-extrabold"
+        >Installing Habari on Lighttpd</a>
+    </h2>
+
+    <p class="mb-4 mt-0">Just a small post about Habari installation over Lighttpd, since it is not really documented anywhere that I could find.
+
+I will assume that you know how to run php scripts on your server, and start...</p>
+
+    <a
+        href="https://seld.be/notes/installing-habari-on-lighttpd"
+        title="Read more - Installing Habari on Lighttpd"
+        class="uppercase font-semibold tracking-wide mb-2"
+    >Read</a>
+</div>
+
+                    <hr class="border-b my-6">
+                    <div class="flex flex-col mb-4">
+    <p class="text-gray-700 dark:text-green-500 font-medium my-2">
+        May 13, 2008
+    </p>
+
+    <h2 class="text-3xl mt-0">
+        <a
+            href="https://seld.be/notes/who-let-the-dwoo-out"
+            title="Read more - Who let the Dwoo out ?"
+            class="text-gray-900 dark:text-green-500 font-extrabold"
+        >Who let the Dwoo out ?</a>
+    </h2>
+
+    <p class="mb-4 mt-0">Four months have passed since I started on this project and I finally feel that it is stable enough to make an announcement and have more people trying it.
+
+So what is it ? Dwoo is a PHP5 template...</p>
+
+    <a
+        href="https://seld.be/notes/who-let-the-dwoo-out"
+        title="Read more - Who let the Dwoo out ?"
+        class="uppercase font-semibold tracking-wide mb-2"
+    >Read</a>
+</div>
+
+                    <hr class="border-b my-6">
+                    <div class="flex flex-col mb-4">
+    <p class="text-gray-700 dark:text-green-500 font-medium my-2">
+        March 13, 2008
+    </p>
+
+    <h2 class="text-3xl mt-0">
+        <a
+            href="https://seld.be/notes/random-seeds-ordering-disorder"
+            title="Read more - Random Seeds - Ordering Disorder"
+            class="text-gray-900 dark:text-green-500 font-extrabold"
+        >Random Seeds - Ordering Disorder</a>
+    </h2>
+
+    <p class="mb-4 mt-0">Randomness is great, that's a fact, it's very useful in many areas of programming, and is especially good to build non-repetitive games. However in some cases, it's useful to be able to reproduce...</p>
+
+    <a
+        href="https://seld.be/notes/random-seeds-ordering-disorder"
+        title="Read more - Random Seeds - Ordering Disorder"
+        class="uppercase font-semibold tracking-wide mb-2"
+    >Read</a>
+</div>
+
+                    <hr class="border-b my-6">
+                    <div class="flex flex-col mb-4">
+    <p class="text-gray-700 dark:text-green-500 font-medium my-2">
+        December 21, 2007
+    </p>
+
+    <h2 class="text-3xl mt-0">
+        <a
+            href="https://seld.be/notes/as3-and-the-display-list-addchildat-magic"
+            title="Read more - AS3 and the Display List, addChildAt magic."
+            class="text-gray-900 dark:text-green-500 font-extrabold"
+        >AS3 and the Display List, addChildAt magic.</a>
+    </h2>
+
+    <p class="mb-4 mt-0">ActionScript 3 introduced the Display List, which is the new version of the old depth system that AS1/2 had, and the Display Objects, which replace the MovieClip, but extending the idea a lot since...</p>
+
+    <a
+        href="https://seld.be/notes/as3-and-the-display-list-addchildat-magic"
+        title="Read more - AS3 and the Display List, addChildAt magic."
+        class="uppercase font-semibold tracking-wide mb-2"
+    >Read</a>
+</div>
+
+                    <hr class="border-b my-6">
+                    <div class="flex flex-col mb-4">
+    <p class="text-gray-700 dark:text-green-500 font-medium my-2">
+        December 18, 2007
+    </p>
+
+    <h2 class="text-3xl mt-0">
+        <a
+            href="https://seld.be/notes/php-rss-generator"
+            title="Read more - PHP RSS Generator"
+            class="text-gray-900 dark:text-green-500 font-extrabold"
+        >PHP RSS Generator</a>
+    </h2>
+
+    <p class="mb-4 mt-0">As part of my work on my CMS (and website as this site is running on it), I decided to code a RSS feed builder. This could easily be made as a standalone class so I thought I would share it.
+
+The...</p>
+
+    <a
+        href="https://seld.be/notes/php-rss-generator"
+        title="Read more - PHP RSS Generator"
+        class="uppercase font-semibold tracking-wide mb-2"
+    >Read</a>
+</div>
+
+                    <hr class="border-b my-6">
+                    <div class="flex flex-col mb-4">
+    <p class="text-gray-700 dark:text-green-500 font-medium my-2">
+        December 16, 2007
+    </p>
+
+    <h2 class="text-3xl mt-0">
+        <a
+            href="https://seld.be/notes/heat-maps-drawing-in-flash"
+            title="Read more - Heat maps drawing in Flash"
+            class="text-gray-900 dark:text-green-500 font-extrabold"
+        >Heat maps drawing in Flash</a>
+    </h2>
+
+    <p class="mb-4 mt-0">Someone was looking for help to draw Heat Maps in Flash this afternoon on &#35;flash and as I found the matter interesting I gave it a shot.
+
+I managed to do it by drawing grey circles with 1-5%...</p>
+
+    <a
+        href="https://seld.be/notes/heat-maps-drawing-in-flash"
+        title="Read more - Heat maps drawing in Flash"
+        class="uppercase font-semibold tracking-wide mb-2"
+    >Read</a>
+</div>
+
+                    <hr class="border-b my-6">
+                    <div class="flex flex-col mb-4">
+    <p class="text-gray-700 dark:text-green-500 font-medium my-2">
+        November 30, 2007
+    </p>
+
+    <h2 class="text-3xl mt-0">
+        <a
+            href="https://seld.be/notes/actionscript-3-language-file-for-geshi"
+            title="Read more - ActionScript 3 Language file for GeSHi"
+            class="text-gray-900 dark:text-green-500 font-extrabold"
+        >ActionScript 3 Language file for GeSHi</a>
+    </h2>
+
+    <p class="mb-4 mt-0">As I wanted to post AS3 code with syntax coloring, I researched it a bit and found GeSHi, a PHP syntax highlighter, for which you can create language files quite easily. There is currently no AS3...</p>
+
+    <a
+        href="https://seld.be/notes/actionscript-3-language-file-for-geshi"
+        title="Read more - ActionScript 3 Language file for GeSHi"
+        class="uppercase font-semibold tracking-wide mb-2"
+    >Read</a>
+</div>
+
+                    <hr class="border-b my-6">
+                    <div class="flex flex-col mb-4">
+    <p class="text-gray-700 dark:text-green-500 font-medium my-2">
+        November 27, 2007
+    </p>
+
+    <h2 class="text-3xl mt-0">
+        <a
+            href="https://seld.be/notes/throwing-errors-before-a-super-statement"
+            title="Read more - Throwing errors before a super() statement"
+            class="text-gray-900 dark:text-green-500 font-extrabold"
+        >Throwing errors before a super() statement</a>
+    </h2>
+
+    <p class="mb-4 mt-0">Lately I was building a class which takes XML as it's configuration, reads part of it and then calls super() with some parameters.
+
+However I wanted to throw an error if the XML did not contain valid...</p>
+
+    <a
+        href="https://seld.be/notes/throwing-errors-before-a-super-statement"
+        title="Read more - Throwing errors before a super() statement"
+        class="uppercase font-semibold tracking-wide mb-2"
+    >Read</a>
+</div>
+
+                    <hr class="border-b my-6">
+                    <div class="flex flex-col mb-4">
+    <p class="text-gray-700 dark:text-green-500 font-medium my-2">
+        November 9, 2007
+    </p>
+
+    <h2 class="text-3xl mt-0">
+        <a
+            href="https://seld.be/notes/the-renewal"
+            title="Read more - The Renewal"
+            class="text-gray-900 dark:text-green-500 font-extrabold"
+        >The Renewal</a>
+    </h2>
+
+    <p class="mb-4 mt-0">After some months of heavy procrastination, I finally took the time to put my new website online, so here it is, although it's still quite empty as of today.
+
+Hopefully I will have time to complete...</p>
+
+    <a
+        href="https://seld.be/notes/the-renewal"
+        title="Read more - The Renewal"
+        class="uppercase font-semibold tracking-wide mb-2"
+    >Read</a>
+</div>
+
+            
+            <nav class="flex text-base my-8">
+                            <a
+                    href="/notes/5"
+                    title="Previous Page"
+                    class="bg-gray-200 hover:bg-gray-400 dark:bg-gray-600 hover:bg-green-600 rounded mr-3 px-5 py-3"
+                >&LeftArrow;</a>
+            
+                            <a
+                    href="/notes"
+                    title="Go to Page 1"
+                    class="bg-gray-200 hover:bg-gray-400 dark:bg-gray-600 hover:bg-green-600 rounded mr-3 px-5 py-3 text-blue-700 dark:text-green-500"
+                >1</a>
+                            <a
+                    href="/notes/2"
+                    title="Go to Page 2"
+                    class="bg-gray-200 hover:bg-gray-400 dark:bg-gray-600 hover:bg-green-600 rounded mr-3 px-5 py-3 text-blue-700 dark:text-green-500"
+                >2</a>
+                            <a
+                    href="/notes/3"
+                    title="Go to Page 3"
+                    class="bg-gray-200 hover:bg-gray-400 dark:bg-gray-600 hover:bg-green-600 rounded mr-3 px-5 py-3 text-blue-700 dark:text-green-500"
+                >3</a>
+                            <a
+                    href="/notes/4"
+                    title="Go to Page 4"
+                    class="bg-gray-200 hover:bg-gray-400 dark:bg-gray-600 hover:bg-green-600 rounded mr-3 px-5 py-3 text-blue-700 dark:text-green-500"
+                >4</a>
+                            <a
+                    href="/notes/5"
+                    title="Go to Page 5"
+                    class="bg-gray-200 hover:bg-gray-400 dark:bg-gray-600 hover:bg-green-600 rounded mr-3 px-5 py-3 text-blue-700 dark:text-green-500"
+                >5</a>
+                            <a
+                    href="/notes/6"
+                    title="Go to Page 6"
+                    class="bg-gray-200 hover:bg-gray-400 dark:bg-gray-600 hover:bg-green-600 rounded mr-3 px-5 py-3 text-blue-600 bg-gray-100 dark:bg-gray-500 dark:text-green-400"
+                >6</a>
+            
+                    </nav>
+            </main>
+
+        <footer class="bg-white dark:bg-gray-900 text-center text-sm mt-12 py-4" role="contentinfo">
+            <ul class="flex flex-col md:flex-row justify-center">
+                <li class="list-none md:mr-2">
+                    <a href="https://twitter.com/seldaek">Twitter</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="mailto:j.boggiano@seld.be">E-Mail</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="https://github.com/Seldaek">GitHub</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="/wishlist">Wishlist</a>
+                </li>
+                <li class="list-none">
+                    All content &copy; Jordi Boggiano 2006-2022.
+                </li>
+            </ul>
+        </footer>
+
+        <script src="/assets/build/js/main.js?id=a951a038edd7c31f0f00"></script>
+
+        <script>
+    const navMenu = {
+        toggle() {
+            const menu = document.getElementById('js-nav-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('lg:block');
+            document.getElementById('js-nav-menu-hide').classList.toggle('hidden');
+            document.getElementById('js-nav-menu-show').classList.toggle('hidden');
+        },
+    }
+</script>
+    </body>
+</html>
