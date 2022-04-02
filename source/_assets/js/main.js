@@ -51,16 +51,18 @@ function disableDarkMode() {
     }
 }
 
-document.querySelectorAll('.toggle-dark').forEach((el) => {
-    el.addEventListener('click', function (e) {
-        e.preventDefault();
-        if (document.documentElement.classList.contains('dark')) {
-            disableDarkMode();
-        } else {
-            enableDarkMode();
-        }
-    }, true);
-});
+document.body.addEventListener('click', function (e) {
+    if (!e.target.classList.contains('toggle-dark')) {
+        return;
+    }
+
+    e.preventDefault();
+    if (document.documentElement.classList.contains('dark')) {
+        disableDarkMode();
+    } else {
+        enableDarkMode();
+    }
+}, true);
 
 Vue.config.productionTip = false;
 
