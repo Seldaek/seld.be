@@ -14,6 +14,7 @@ class GenerateSitemap
         '/pavatar.png',
         '/google43a461bfa3176540.html',
         '/.well-known/*',
+        '/.nojekyll',
         '/CNAME',
         '*/404*'
     ];
