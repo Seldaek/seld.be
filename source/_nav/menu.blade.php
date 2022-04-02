@@ -13,4 +13,8 @@
         class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400">
         Feed
     </a>
+
+    <a title="Dark Mode" class="ml-4 cursor-pointer toggle-dark dark:hidden inline-block">🕶</a>
+
+    <a title="Light Mode" class="ml-4 cursor-pointer toggle-dark hidden dark:inline-block">☀</a>
 </nav>
