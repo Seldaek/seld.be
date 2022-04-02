@@ -31,6 +31,6 @@ jobs:
 
       - name: Commit new build
         run: |
-          git add build_production
+          git add -f build_production
           git commit -m "Build for deploy" --author 'Jordi Boggiano <j.boggiano@seld.be>'
           git subtree push --prefix build_production origin gh-pages
