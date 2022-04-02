@@ -21,8 +21,10 @@ jobs:
           ini-values: "memory_limit=-1"
           php-version: "8.0"
 
-      - name: "Install dependencies from composer.lock using composer binary provided by system"
-        run: "composer install -n"
+      - name: "Install dependencies"
+        run: |
+          composer install -n
+          npm install
 
       - name: Build site
         run: npm run prod
