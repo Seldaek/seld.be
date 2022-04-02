@@ -1,0 +1,34 @@
+name: "Deploy"
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  build:
+    name: Build & Deploy Site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          coverage: "none"
+          extensions: "intl"
+          ini-values: "memory_limit=-1"
+          php-version: "8.0"
+
+      - name: "Install dependencies from composer.lock using composer binary provided by system"
+        run: "composer install -n"
+
+      - name: Build site
+        run: npm run prod
+
+      - name: Commit new build
+        run: |
+          git add build_production
+          git commit -m "Build for deploy" --author 'Jordi Boggiano <j.boggiano@seld.be>'
+          git subtree push --prefix build_production origin gh-pages
