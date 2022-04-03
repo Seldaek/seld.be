@@ -19,13 +19,17 @@ document.querySelectorAll('pre code').forEach((block) => {
 });
 
 var darkMode = window.matchMedia('(prefers-color-scheme: dark)');
-if (darkMode.matches) {
+
+if (localStorage.theme === 'dark' || (!('theme' in localStorage) && darkMode.matches)) {
     enableDarkMode();
 } else {
     disableDarkMode();
 }
 
 darkMode.onchange = (e) => {
+    if ('theme' in localStorage) {
+        return;
+    }
     if (e.matches) {
         enableDarkMode();
     } else {
@@ -57,10 +61,20 @@ document.body.addEventListener('click', function (e) {
     }
 
     e.preventDefault();
+    let newModeIsDark = false;
     if (document.documentElement.classList.contains('dark')) {
         disableDarkMode();
     } else {
         enableDarkMode();
+        newModeIsDark = true;
+    }
+
+    // if switching back to the system default mode, remove from local storage
+    // otherwise save for later
+    if (darkMode.matches === newModeIsDark) {
+        localStorage.removeItem('theme')
+    } else {
+        localStorage.theme = newModeIsDark ? 'dark' : 'light';
     }
 }, true);
 
