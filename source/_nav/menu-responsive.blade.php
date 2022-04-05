@@ -19,7 +19,7 @@
                 title="{{ $page->siteName }} Atom Feed"
                 href="/feed.atom"
                 class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
-            >Contact</a>
+            >Feed</a>
         </li>
     </ul>
 </nav>
