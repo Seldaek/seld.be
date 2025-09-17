@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="description" content="PHP 5.3 has been out of maintenance for about three months now and it seems like it&#039;s time for the community to move on at last. Drupal8 will target 5.4. Symfony announced the results of a poll about which PHP version Symfony3 should target. And Pascal Martin released today an update on his PHP usage stats based on scanning server headers....">
+
+        <meta property="og:title" content="My view of PHP version adoption | Jordi&#039;s Ramblings"/>
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="https://seld.be/notes/my-view-of-php-version-adoption"/>
+        <meta property="og:description" content="PHP 5.3 has been out of maintenance for about three months now and it seems like it&#039;s time for the community to move on at last. Drupal8 will target 5.4. Symfony announced the results of a poll about which PHP version Symfony3 should target. And Pascal Martin released today an update on his PHP usage stats based on scanning server headers...." />
+
+        <title>My view of PHP version adoption | Jordi&#039;s Ramblings</title>
+
+        <link rel="home" href="https://seld.be">
+        <link rel="icon" href="/favicon.ico">
+        <link rel="me" href="https://mastodon.social/@seldaek">
+        <link href="/feed.atom" type="application/atom+xml" rel="alternate" title="Jordi&#039;s Ramblings Atom Feed">
+
+                    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGN4JJEDTM"></script>
+            <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-QGN4JJEDTM');
+            </script>
+        
+        <!-- TODO self-host this -->
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,700,700i,800,800i" rel="stylesheet">
+        <link rel="stylesheet" href="/assets/build/css/main.css?id=d00f50ff97ec6d83fcce">
+    </head>
+
+    <body class="flex flex-col justify-between min-h-screen text-gray-800 dark:text-green-500 leading-normal font-sans dark:font-mono bg-gray-100 dark:bg-gray-800">
+        <header class="flex items-center shadow bg-white dark:bg-gray-900 border-b dark:border-green-300 h-24 py-4" role="banner">
+            <div class="container flex items-center max-w-4xl mx-auto px-4 lg:px-8">
+                <div class="flex items-center">
+                    <a href="/" title="Jordi&#039;s Ramblings home" class="inline-flex items-center">
+                        <h1 class="text-lg md:text-2xl text-blue-800 dark:text-green-400 font-semibold hover:text-blue-600 dark:hover:text-green-200 my-0">Jordi&#039;s Ramblings</h1>
+                    </a>
+                </div>
+
+                <div id="vue-search" class="flex flex-1 justify-end items-center">
+                    <search></search>
+
+                    <nav class="hidden lg:flex items-center justify-end text-lg">
+    <a title="Jordi&#039;s Ramblings Blog" href="/notes"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400 ">
+        Blog
+    </a>
+
+    <a title="Jordi&#039;s Ramblings About" href="/about"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400 ">
+        About
+    </a>
+
+    <a title="Jordi&#039;s Ramblings Atom Feed" href="/feed.atom"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400">
+        Feed
+    </a>
+
+    <a title="Dark Mode" class="ml-4 cursor-pointer toggle-dark dark:hidden inline-block">🕶</a>
+
+    <a title="Light Mode" class="ml-4 cursor-pointer toggle-dark hidden dark:inline-block">☀</a>
+</nav>
+
+                    <button class="flex justify-center items-center bg-blue-500 border border-blue-500 dark:bg-green-400 dark:border-green-400 h-10 px-5 rounded-full lg:hidden focus:outline-none"
+    onclick="navMenu.toggle()"
+>
+    <svg id="js-nav-menu-show" xmlns="http://www.w3.org/2000/svg"
+        class="fill-current text-white h-9 w-4" viewBox="0 0 32 32"
+    >
+        <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+    </svg>
+
+    <svg id="js-nav-menu-hide" xmlns="http://www.w3.org/2000/svg"
+        class="hidden fill-current text-white h-9 w-4" viewBox="0 0 36 30"
+    >
+        <polygon points="32.8,4.4 28.6,0.2 18,10.8 7.4,0.2 3.2,4.4 13.8,15 3.2,25.6 7.4,29.8 18,19.2 28.6,29.8 32.8,25.6 22.2,15 "/>
+    </svg>
+</button>
+
+                </div>
+            </div>
+        </header>
+
+        <nav id="js-nav-menu" class="w-auto px-2 pt-6 pb-2 bg-gray-200 dark:bg-gray-700 shadow hidden lg:hidden">
+    <ul class="my-0">
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings Blog"
+                href="/notes"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >Blog</a>
+        </li>
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings About"
+                href="/about"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >About</a>
+        </li>
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings Atom Feed"
+                href="/feed.atom"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >Feed</a>
+        </li>
+    </ul>
+</nav>
+
+        <main role="main" class="flex-auto w-full container max-w-4xl mx-auto bg-white dark:bg-black mt-6 p-6">
+                
+    <h1 class="leading-none mb-2">My view of PHP version adoption</h1>
+
+    <p class="text-gray-700 dark:text-green-700 text-xl md:mt-0">Jordi Boggiano  •  November 14, 2014</p>
+
+                        <a
+                href="/categories/news"
+                title="View posts in news"
+                class="inline-block bg-gray-300 text-gray-800 hover:bg-blue-200 dark:bg-gray-600 dark:text-green-200 dark:hover:bg-green-800 leading-loose tracking-wide uppercase text-xs font-semibold rounded mr-4 px-3 pt-px mb-10"
+            >news</a>
+                    <a
+                href="/categories/php"
+                title="View posts in php"
+                class="inline-block bg-gray-300 text-gray-800 hover:bg-blue-200 dark:bg-gray-600 dark:text-green-200 dark:hover:bg-green-800 leading-loose tracking-wide uppercase text-xs font-semibold rounded mr-4 px-3 pt-px mb-10"
+            >php</a>
+            
+    <div class="border-b border-blue-200 dark:border-green-200 mb-10 pb-4" v-pre>
+        <p>PHP 5.3 has been out of maintenance for about three months now and it seems like it's time for the community to move on at last. Drupal8 will target 5.4. Symfony <a href="http://symfony.com/blog/symfony-3-0-the-roadmap">announced the results</a> of a poll about which PHP version Symfony3 should target (TL;DR: 5.5 and 5.6 are preferred). And Pascal Martin released yesterday an update on his <a href="http://blog.pascal-martin.fr/post/php-versions-stats-2014-10-en">PHP usage stats</a> based on scanning server headers.</p>
+
+<p>Pascal's number are interesting but I believe they have a bias towards older PHP versions. I would argue that people configuring their servers properly are also those that tend to keep up to date with newer versions, and part of the best practices is to avoid publishing the software versions you are using (i.e. disable expose&#95;php in php.ini). If I am correct here that means early adopters are mis-represented in those numbers.</p>
+
+<p>In any case, I do have another biased dataset to present so here it comes! I looked in the <a href="https://packagist.org">packagist.org</a> logs of the last fifty days for <code>GET /packages.json</code> which represents a composer update done by someone. Since Composer sends the PHP version it is running with in its <code>User-Agent</code> header, I can use that to see which PHP versions people are using Composer with. Of course this data set is probably biased towards development machine and CI servers and as such it should also be taken with a grain of salt.</p>
+
+<h2>PHP usage statistics</h2>
+
+<p>I have two datasets, from November 2013 and today, which shows the progression of various versions. Any version below 3% usage has been removed to keep things readable.</p>
+
+<h3>November 2013</h3>
+
+<table> <tr> <td style="width: 90px">All versions</td> <td></td> <td></td> <td style="width: 30px"></td> <td style="width: 70px">Grouped</td> <td></td> <td></td> </tr> <tr> <td>Total</td> <td>4112760 </td> <td>100.00%</td> <td></td> <td>Total</td> <td>4112760 </td> <td>100.00%</td> </tr> <tr> <td>PHP 5.3.10</td> <td>490350</td> <td>11.92%</td> <td></td> <td>PHP 5.4</td> <td>2069021</td> <td>50.31%</td> </tr> <tr> <td>PHP 5.3.3</td> <td>419871</td> <td>10.21%</td> <td></td> <td>PHP 5.3</td> <td>1533073</td> <td>37.28%</td> </tr> <tr> <td>PHP 5.4.20</td> <td>387450</td> <td>9.42%</td> <td></td> <td>PHP 5.5</td> <td>510596</td> <td>12.41%</td> </tr> <tr> <td>PHP 5.4.4</td> <td>274741</td> <td>6.68%</td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <td>PHP 5.4.9</td> <td>198343</td> <td>4.82%</td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <td>PHP 5.4.16</td> <td>180150</td> <td>4.38%</td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <td>PHP 5.4.19</td> <td>167416</td> <td>4.07%</td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <td>PHP 5.5.3</td> <td>166317</td> <td>4.04%</td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <td>PHP 5.4.17</td> <td>160754</td> <td>3.91%</td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <td>PHP 5.4.21</td> <td>144939</td> <td>3.52%</td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <td>PHP 5.3.26</td> <td>131497</td> <td>3.20%</td> <td></td> <td></td> <td></td> <td></td> </tr> </table>
+
+<h3>November 2014</h3>
+
+<table> <tr> <td style="width: 90px">All versions</td> <td></td> <td></td> <td style="width: 30px"></td> <td style="width: 70px">Grouped</td> <td></td> <td></td> </tr> <tr> <td>Total</td> <td>11556916 </td> <td>100.00%</td> <td></td> <td>Total</td> <td>11556916 </td> <td>100.00%</td> </tr> <tr> <td>PHP 5.5.9</td> <td>2475970</td> <td>21.42%</td> <td></td> <td>PHP 5.5</td> <td>5647892</td> <td>48.87%</td> </tr> <tr> <td>PHP 5.4.4</td> <td>1022498</td> <td>8.85%</td> <td></td> <td>PHP 5.4</td> <td>3305929</td> <td>28.61%</td> </tr> <tr> <td>PHP 5.5.17</td> <td>678997</td> <td>5.88%</td> <td></td> <td>PHP 5.3</td> <td>1716653</td> <td>14.85%</td> </tr> <tr> <td>PHP 5.5.16</td> <td>529227</td> <td>4.58%</td> <td></td> <td>PHP 5.6</td> <td>886260</td> <td>7.67%</td> </tr> <tr> <td>PHP 5.3.3</td> <td>509101</td> <td>4.41%</td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <td>PHP 5.3.10</td> <td>479750</td> <td>4.15%</td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <td>PHP 5.6.0</td> <td>391633</td> <td>3.39%</td> <td></td> <td></td> <td></td> <td></td> </tr> </table>
+
+<p>A few observations: 5.3 really is on the way out, 5.5 is now the major platform, 5.6 adoption is lagging behind last year's 5.5 adoption a little bit which is unfortunate but can perhaps be explained by the fact Ubuntu 14.04 ships with 5.5.9</p>
+
+<h2>PHP requirements in Packages</h2>
+
+<p>A second dataset I looked at is which versions are required by all the PHP packages present on packagist. I split it in two groups: those that required a given version <strong>at any point</strong> and those that require it in their <strong>current master version</strong>.</p>
+
+<h3>PHP Requirements - Anytime - November 2014</h3>
+
+<table> <tbody><tr> <td style="width: 40px">5.2</td> <td style="width: 45px">1204</td> <td>4.23%</td> </tr> <tr> <td>5.3</td> <td>20780</td> <td>72.94%</td> </tr> <tr> <td>5.4</td> <td>7953</td> <td>27.92%</td> </tr> <tr> <td>5.5</td> <td>641</td> <td>2.25%</td> </tr> <tr> <td>5.6</td> <td>44</td> <td>0.15%</td> </tr> </tbody></table>
+
+<h3>PHP Requirements - Current Master - November 2014</h3>
+
+<table> <tbody><tr> <td style="width: 40px">5.2</td> <td style="width: 45px">1019</td> <td>3.58%</td> </tr> <tr> <td>5.3</td> <td>19334</td> <td>67.86%</td> </tr> <tr> <td>5.4</td> <td>7523</td> <td>26.41%</td> </tr> <tr> <td>5.5</td> <td>573</td> <td>2.01%</td> </tr> <tr> <td>5.6</td> <td>41</td> <td>0.14%</td> </tr> </tbody></table>
+
+<p>A few observations: almost 7% of packages that required 5.3 and 15% of those requiring 5.2 gave these up for higher requirements, that's pretty low but it's a start. 5.4 is getting a good foothold but 5.5/5.6 features are hardly used by OSS packages.</p>
+
+<h2>Conclusions</h2>
+
+<p>Again these numbers need to be taken with a grain of salt, but looking at the ecosystem from this perspective I would say PHP 5.3 can be safely dropped by most libraries and 5.5 sounds like a promising target!</p>
+    </div>
+
+    <nav class="flex justify-between text-sm md:text-base">
+        <div>
+                            <a href="https://seld.be/notes/toran-proxy-and-the-future-of-composer" title="Older Post: Toran Proxy and the future of Composer">
+                    &LeftArrow; Toran Proxy and the future of Composer
+                </a>
+                    </div>
+
+        <div>
+                            <a href="https://seld.be/notes/composer-1-0-alpha9" title="Newer Post: Composer 1.0 alpha9">
+                    Composer 1.0 alpha9 &RightArrow;
+                </a>
+                    </div>
+    </nav>
+        </main>
+
+        <footer class="bg-white dark:bg-gray-900 text-center text-sm mt-12 py-4" role="contentinfo">
+            <ul class="flex flex-col md:flex-row justify-center">
+                <li class="list-none md:mr-2">
+                    <a href="https://twitter.com/seldaek">Twitter</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="mailto:j.boggiano@seld.be">E-Mail</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="https://github.com/Seldaek">GitHub</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="/wishlist">Wishlist</a>
+                </li>
+                <li class="list-none">
+                    All content &copy; Jordi Boggiano 2006-2025.
+                </li>
+            </ul>
+        </footer>
+
+        <script src="/assets/build/js/main.js?id=d987125254011a3fac10"></script>
+
+        <script>
+    const navMenu = {
+        toggle() {
+            const menu = document.getElementById('js-nav-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('lg:block');
+            document.getElementById('js-nav-menu-hide').classList.toggle('hidden');
+            document.getElementById('js-nav-menu-show').classList.toggle('hidden');
+        },
+    }
+</script>
+    </body>
+</html>

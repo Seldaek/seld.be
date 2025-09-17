@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="description" content="Lessons learned migrating big old codebases to strict PHPStan configs">
+
+        <meta property="og:title" content="Narrowing types for static analysis | Jordi&#039;s Ramblings"/>
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="https://seld.be/notes/narrowing-types-for-static-analysis"/>
+        <meta property="og:description" content="Lessons learned migrating big old codebases to strict PHPStan configs" />
+
+        <title>Narrowing types for static analysis | Jordi&#039;s Ramblings</title>
+
+        <link rel="home" href="https://seld.be">
+        <link rel="icon" href="/favicon.ico">
+        <link rel="me" href="https://mastodon.social/@seldaek">
+        <link href="/feed.atom" type="application/atom+xml" rel="alternate" title="Jordi&#039;s Ramblings Atom Feed">
+
+                    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGN4JJEDTM"></script>
+            <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-QGN4JJEDTM');
+            </script>
+        
+        <!-- TODO self-host this -->
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,700,700i,800,800i" rel="stylesheet">
+        <link rel="stylesheet" href="/assets/build/css/main.css?id=d00f50ff97ec6d83fcce">
+    </head>
+
+    <body class="flex flex-col justify-between min-h-screen text-gray-800 dark:text-green-500 leading-normal font-sans dark:font-mono bg-gray-100 dark:bg-gray-800">
+        <header class="flex items-center shadow bg-white dark:bg-gray-900 border-b dark:border-green-300 h-24 py-4" role="banner">
+            <div class="container flex items-center max-w-4xl mx-auto px-4 lg:px-8">
+                <div class="flex items-center">
+                    <a href="/" title="Jordi&#039;s Ramblings home" class="inline-flex items-center">
+                        <h1 class="text-lg md:text-2xl text-blue-800 dark:text-green-400 font-semibold hover:text-blue-600 dark:hover:text-green-200 my-0">Jordi&#039;s Ramblings</h1>
+                    </a>
+                </div>
+
+                <div id="vue-search" class="flex flex-1 justify-end items-center">
+                    <search></search>
+
+                    <nav class="hidden lg:flex items-center justify-end text-lg">
+    <a title="Jordi&#039;s Ramblings Blog" href="/notes"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400 ">
+        Blog
+    </a>
+
+    <a title="Jordi&#039;s Ramblings About" href="/about"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400 ">
+        About
+    </a>
+
+    <a title="Jordi&#039;s Ramblings Atom Feed" href="/feed.atom"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400">
+        Feed
+    </a>
+
+    <a title="Dark Mode" class="ml-4 cursor-pointer toggle-dark dark:hidden inline-block">🕶</a>
+
+    <a title="Light Mode" class="ml-4 cursor-pointer toggle-dark hidden dark:inline-block">☀</a>
+</nav>
+
+                    <button class="flex justify-center items-center bg-blue-500 border border-blue-500 dark:bg-green-400 dark:border-green-400 h-10 px-5 rounded-full lg:hidden focus:outline-none"
+    onclick="navMenu.toggle()"
+>
+    <svg id="js-nav-menu-show" xmlns="http://www.w3.org/2000/svg"
+        class="fill-current text-white h-9 w-4" viewBox="0 0 32 32"
+    >
+        <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+    </svg>
+
+    <svg id="js-nav-menu-hide" xmlns="http://www.w3.org/2000/svg"
+        class="hidden fill-current text-white h-9 w-4" viewBox="0 0 36 30"
+    >
+        <polygon points="32.8,4.4 28.6,0.2 18,10.8 7.4,0.2 3.2,4.4 13.8,15 3.2,25.6 7.4,29.8 18,19.2 28.6,29.8 32.8,25.6 22.2,15 "/>
+    </svg>
+</button>
+
+                </div>
+            </div>
+        </header>
+
+        <nav id="js-nav-menu" class="w-auto px-2 pt-6 pb-2 bg-gray-200 dark:bg-gray-700 shadow hidden lg:hidden">
+    <ul class="my-0">
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings Blog"
+                href="/notes"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >Blog</a>
+        </li>
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings About"
+                href="/about"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >About</a>
+        </li>
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings Atom Feed"
+                href="/feed.atom"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >Feed</a>
+        </li>
+    </ul>
+</nav>
+
+        <main role="main" class="flex-auto w-full container max-w-4xl mx-auto bg-white dark:bg-black mt-6 p-6">
+                
+    <h1 class="leading-none mb-2">Narrowing types for static analysis</h1>
+
+    <p class="text-gray-700 dark:text-green-700 text-xl md:mt-0">Jordi Boggiano  •  August 3, 2022</p>
+
+                        <a
+                href="/categories/php"
+                title="View posts in php"
+                class="inline-block bg-gray-300 text-gray-800 hover:bg-blue-200 dark:bg-gray-600 dark:text-green-200 dark:hover:bg-green-800 leading-loose tracking-wide uppercase text-xs font-semibold rounded mr-4 px-3 pt-px mb-10"
+            >php</a>
+            
+    <div class="border-b border-blue-200 dark:border-green-200 mb-10 pb-4" v-pre>
+        <p>I have spent the last year moving a few big old codebases, including Composer, to PHPStan's level 8. Here are a few lessons I think I have learned in the process.</p>
+
+<h3>Baseline + strict static analysis is the way to go</h3>
+
+<p>I was for a while skeptical about using the baseline feature as it seemed to me like shoving all type errors under the rug, never to be looked at again.</p>
+
+<p>I still believe there is some truth to this, and going back and fixing things does take a conscious effort. Yet after having gone full strict (level 8 + phpstan-strict-rules + phpstan-deprecation-rules at least) on a few projects I think it is well worth it.</p>
+
+<p>It lets you move much quicker to a point where all new code is at least checked strictly for errors, so you can stop piling up technical debt <strong>right now</strong>. As such I would highly recommend using a baseline to increase strictness.</p>
+
+<h3>Fix essential types as soon as possible</h3>
+
+<p>The main struggle with a strict config + baseline approach is if you have deeply broken types in PHPDoc. Including nullability information for example wasn't so common 5-10 years ago. And maybe you changed data types entirely and forgot to update docblocks.</p>
+
+<p>This can lead you to see many bogus error reports in static analysis when new code using these broken types is being analyzed. Every time you have to waste time figuring out whether this issue really needs fixing or not, and possibly decide to add it to the baseline as well.</p>
+
+<p>Therefore spending some time fixing your most essential classes/types that are used throughout the project as early as possible makes a lot of sense and will save you time down the line. You can skip loading the baseline and analyze specific files to identify and fix issues in those areas that afford the greatest return on investment.</p>
+
+<h3>Broad input types, narrow output types</h3>
+
+<p>Being too strict on input (param types) means you can sometimes waste the consumers' time validating things which maybe don't need to be. Of course you do want to be strict enough that you don't cause bugs so this point is definitely one for the "it depends" category.</p>
+
+<p>Being too loose on output (return type) means you will definitely waste consumers' time as they have to narrow down the types again before being able to use them.</p>
+
+<p>As most APIs have more consumers than implementors, defining your API boundaries to accept broad types and return narrow types saves time overall.</p>
+
+<p>This is perhaps more true for open source libraries which have even more consumers, but I think it also applies more generally to every function in every application.</p>
+
+<h3>Split up functions to avoid returning union types</h3>
+
+<p>Nullable return values is probably the most common kind of union type, and getting a <code>Foo|null</code> back is usually a huge pain as you will have to check for nullability before using it.</p>
+
+<p>If possible at all it is usually better to offer multiple APIs doing the same but one of them enforcing that the returned type is <code>Foo</code>.</p>
+
+<p>One concrete example of this in Composer would be the former <code>BaseCommand::getComposer</code> method, which is used throughout most commands to retrieve a <code>Composer\Composer</code> instance. However it quickly became obvious we sometimes were OK not getting an instance back, so a <code>bool $required = true</code> parameter was added, and when you set it to false it would change the return type to <code>Composer\Composer|null</code>.</p>
+
+<p>This is quite a mess, and while PHPStan nowadays allows you to express the return value with <code>@return ($required is true ? Composer : Composer|null)</code> I would still not recommend doing this if you can avoid it.</p>
+
+<p>The approach I took was to <a href="https://github.com/composer/composer/blob/d1f36f43c16750e0644020c9682dc028524cdfe9/src/Composer/Command/BaseCommand.php#L87-L132">split it up in two functions</a>, <code>tryComposer</code> (which can return null) and requireComposer (which will throw if it cannot give you a Composer instance). It allows most code to get a narrower return type and the few points where we do want to consider the null value can use <code>tryComposer</code> which mirrors the <a href="https://www.php.net/manual/en/backedenum.tryfrom.php"><code>BackedEnum::tryFrom</code></a> method to give you what you want <em>or null</em>. It also has the added benefit of leading to more readable code on the consumer side, as tryComposer hints at what it does much more than a <code>$required</code> parameter set to false.</p>
+
+<p>Note that I would probably have named <code>requireComposer</code> <code>getComposer</code> if it wasn't for BC requirements here, as the method already existed with different semantics. It is now deprecated though.</p>
+    </div>
+
+    <nav class="flex justify-between text-sm md:text-base">
+        <div>
+                            <a href="https://seld.be/notes/a-nomenclature-of-hate" title="Older Post: A nomenclature of hate">
+                    &LeftArrow; A nomenclature of hate
+                </a>
+                    </div>
+
+        <div>
+                    </div>
+    </nav>
+        </main>
+
+        <footer class="bg-white dark:bg-gray-900 text-center text-sm mt-12 py-4" role="contentinfo">
+            <ul class="flex flex-col md:flex-row justify-center">
+                <li class="list-none md:mr-2">
+                    <a href="https://twitter.com/seldaek">Twitter</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="mailto:j.boggiano@seld.be">E-Mail</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="https://github.com/Seldaek">GitHub</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="/wishlist">Wishlist</a>
+                </li>
+                <li class="list-none">
+                    All content &copy; Jordi Boggiano 2006-2025.
+                </li>
+            </ul>
+        </footer>
+
+        <script src="/assets/build/js/main.js?id=d987125254011a3fac10"></script>
+
+        <script>
+    const navMenu = {
+        toggle() {
+            const menu = document.getElementById('js-nav-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('lg:block');
+            document.getElementById('js-nav-menu-hide').classList.toggle('hidden');
+            document.getElementById('js-nav-menu-show').classList.toggle('hidden');
+        },
+    }
+</script>
+    </body>
+</html>

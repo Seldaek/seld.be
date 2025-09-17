@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="description" content="It&#039;s stats o&#039;clock! See 2014, 2015, 2016.1, 2016.2, 2017.1 and 2017.2 for previous similar posts. A quick note on methodology, because all these stats are imperfect as they just sample some subset of the PHP user base. I look in the packagist.org logs of the last month for Composer installs done by someone. Composer sends the PHP version it is runn...">
+
+        <meta property="og:title" content="PHP Versions Stats - 2018.1 Edition | Jordi&#039;s Ramblings"/>
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="https://seld.be/notes/php-versions-stats-2018-1-edition"/>
+        <meta property="og:description" content="It&#039;s stats o&#039;clock! See 2014, 2015, 2016.1, 2016.2, 2017.1 and 2017.2 for previous similar posts. A quick note on methodology, because all these stats are imperfect as they just sample some subset of the PHP user base. I look in the packagist.org logs of the last month for Composer installs done by someone. Composer sends the PHP version it is runn..." />
+
+        <title>PHP Versions Stats - 2018.1 Edition | Jordi&#039;s Ramblings</title>
+
+        <link rel="home" href="https://seld.be">
+        <link rel="icon" href="/favicon.ico">
+        <link rel="me" href="https://mastodon.social/@seldaek">
+        <link href="/feed.atom" type="application/atom+xml" rel="alternate" title="Jordi&#039;s Ramblings Atom Feed">
+
+                    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGN4JJEDTM"></script>
+            <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-QGN4JJEDTM');
+            </script>
+        
+        <!-- TODO self-host this -->
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,700,700i,800,800i" rel="stylesheet">
+        <link rel="stylesheet" href="/assets/build/css/main.css?id=d00f50ff97ec6d83fcce">
+    </head>
+
+    <body class="flex flex-col justify-between min-h-screen text-gray-800 dark:text-green-500 leading-normal font-sans dark:font-mono bg-gray-100 dark:bg-gray-800">
+        <header class="flex items-center shadow bg-white dark:bg-gray-900 border-b dark:border-green-300 h-24 py-4" role="banner">
+            <div class="container flex items-center max-w-4xl mx-auto px-4 lg:px-8">
+                <div class="flex items-center">
+                    <a href="/" title="Jordi&#039;s Ramblings home" class="inline-flex items-center">
+                        <h1 class="text-lg md:text-2xl text-blue-800 dark:text-green-400 font-semibold hover:text-blue-600 dark:hover:text-green-200 my-0">Jordi&#039;s Ramblings</h1>
+                    </a>
+                </div>
+
+                <div id="vue-search" class="flex flex-1 justify-end items-center">
+                    <search></search>
+
+                    <nav class="hidden lg:flex items-center justify-end text-lg">
+    <a title="Jordi&#039;s Ramblings Blog" href="/notes"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400 ">
+        Blog
+    </a>
+
+    <a title="Jordi&#039;s Ramblings About" href="/about"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400 ">
+        About
+    </a>
+
+    <a title="Jordi&#039;s Ramblings Atom Feed" href="/feed.atom"
+        class="ml-6 text-gray-700 hover:text-blue-600 dark:text-green-500 dark:hover:text-green-400">
+        Feed
+    </a>
+
+    <a title="Dark Mode" class="ml-4 cursor-pointer toggle-dark dark:hidden inline-block">🕶</a>
+
+    <a title="Light Mode" class="ml-4 cursor-pointer toggle-dark hidden dark:inline-block">☀</a>
+</nav>
+
+                    <button class="flex justify-center items-center bg-blue-500 border border-blue-500 dark:bg-green-400 dark:border-green-400 h-10 px-5 rounded-full lg:hidden focus:outline-none"
+    onclick="navMenu.toggle()"
+>
+    <svg id="js-nav-menu-show" xmlns="http://www.w3.org/2000/svg"
+        class="fill-current text-white h-9 w-4" viewBox="0 0 32 32"
+    >
+        <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+    </svg>
+
+    <svg id="js-nav-menu-hide" xmlns="http://www.w3.org/2000/svg"
+        class="hidden fill-current text-white h-9 w-4" viewBox="0 0 36 30"
+    >
+        <polygon points="32.8,4.4 28.6,0.2 18,10.8 7.4,0.2 3.2,4.4 13.8,15 3.2,25.6 7.4,29.8 18,19.2 28.6,29.8 32.8,25.6 22.2,15 "/>
+    </svg>
+</button>
+
+                </div>
+            </div>
+        </header>
+
+        <nav id="js-nav-menu" class="w-auto px-2 pt-6 pb-2 bg-gray-200 dark:bg-gray-700 shadow hidden lg:hidden">
+    <ul class="my-0">
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings Blog"
+                href="/notes"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >Blog</a>
+        </li>
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings About"
+                href="/about"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >About</a>
+        </li>
+        <li class="pl-4 list-none">
+            <a
+                title="Jordi&#039;s Ramblings Atom Feed"
+                href="/feed.atom"
+                class="block mt-0 mb-4 text-sm no-underline text-gray-800 hover:text-blue-500 dark:text-green-300 dark:hover:text-green-100"
+            >Feed</a>
+        </li>
+    </ul>
+</nav>
+
+        <main role="main" class="flex-auto w-full container max-w-4xl mx-auto bg-white dark:bg-black mt-6 p-6">
+                
+    <h1 class="leading-none mb-2">PHP Versions Stats - 2018.1 Edition</h1>
+
+    <p class="text-gray-700 dark:text-green-700 text-xl md:mt-0">Jordi Boggiano  •  May 15, 2018</p>
+
+                        <a
+                href="/categories/news"
+                title="View posts in news"
+                class="inline-block bg-gray-300 text-gray-800 hover:bg-blue-200 dark:bg-gray-600 dark:text-green-200 dark:hover:bg-green-800 leading-loose tracking-wide uppercase text-xs font-semibold rounded mr-4 px-3 pt-px mb-10"
+            >news</a>
+                    <a
+                href="/categories/php"
+                title="View posts in php"
+                class="inline-block bg-gray-300 text-gray-800 hover:bg-blue-200 dark:bg-gray-600 dark:text-green-200 dark:hover:bg-green-800 leading-loose tracking-wide uppercase text-xs font-semibold rounded mr-4 px-3 pt-px mb-10"
+            >php</a>
+            
+    <div class="border-b border-blue-200 dark:border-green-200 mb-10 pb-4" v-pre>
+        <p>It's stats o'clock! See <a href="https://seld.be/notes/my-view-of-php-version-adoption">2014</a>, <a href="https://seld.be/notes/php-versions-stats-2015-edition">2015</a>, <a href="https://seld.be/notes/php-versions-stats-2016-1-edition">2016.1</a>, <a href="https://seld.be/notes/php-versions-stats-2016-2-edition">2016.2</a>, <a href="https://seld.be/notes/php-versions-stats-2017-1-edition">2017.1</a> and <a href="https://seld.be/notes/php-versions-stats-2017-2-edition">2017.2</a> for previous similar posts.</p>
+
+<p>A quick note on methodology, because all these stats are imperfect as they just sample some subset of the PHP user base. I look in the <a href="https://packagist.org">packagist.org</a> logs of the last month for Composer installs done by someone. Composer sends the PHP version it is running with in its <code>User-Agent</code> header, so I can use that to see which PHP versions people are using Composer with.</p>
+
+<h2>PHP usage statistics</h2>
+
+<h3>May 2018 (+/- diff from November 2017)</h3>
+
+<table> <tr> <td style="width: 90px">All versions</td> <td></td> <td style="width: 40px"></td> <td style="width: 70px">Grouped</td> <td style="width: 120px"></td> </tr> <tr> <td>PHP 7.2.4</td> <td>7.54%</td> <td></td> <td>PHP 7.1</td> <td>35.02% (-1.61)</td> <td style="display: inline-block; height:9px; background: #8e8ef5; width: 70px"></td> </tr> <tr> <td>PHP 7.1.16</td> <td>7.41%</td> <td></td> <td>PHP 7.0</td> <td>23.02% (-7.74)</td> <td style="display: inline-block; height:9px; background: #8e8ef5; width: 46px"></td> </tr> <tr> <td>PHP 7.0.28</td> <td>5.54%</td> <td></td> <td>PHP 7.2</td> <td>20.18% (+20.18)</td> <td style="display: inline-block; height:9px; background: #8e8ef5; width: 40px"></td> </tr> <tr> <td>PHP 7.1.15</td> <td>4.11%</td> <td></td> <td>PHP 5.6</td> <td>16.48% (-6.8)</td> <td style="display: inline-block; height:9px; background: #8e8ef5; width: 33px"></td> </tr> <tr> <td>PHP 7.2.3</td> <td>3.85%</td> <td></td> <td>PHP 5.5</td> <td>3.50% (-2.61)</td> <td style="display: inline-block; height:9px; background: #8e8ef5; width: 7px"></td> </tr> <tr> <td>PHP 7.1.14</td> <td>3.79%</td> <td></td> <td>PHP 5.4</td> <td>1.04% (-0.47)</td> <td style="display: inline-block; height:9px; background: #8e8ef5; width: 2px"></td> </tr> </table>
+
+<p><img src="//seld.be/images/composer-2018-01.png" alt="" /></p>
+
+<p>A few observations: PHP 7.1 is still on top but 7.2 is closing real quick with already 1/5th of users having upgraded. That's the biggest growth rate for a newly released version since I have started collecting those stats. Ubuntu 18.04 LTS ships with 7.2 so this number will likely grow even more in the coming months. 78% of people used PHP 7+ and almost 95% were using a PHP version that is still maintained, it sounds too good to be true. PHP 5.6 and 7.0 will reach <a href="http://php.net/supported-versions.php">end of life by late 2018</a> though so that's 40% of users who are in need of an upgrade if we want to keep these numbers up!</p>
+
+<p>Here is the aggregate chart covering all my blog posts and the last five years.</p>
+
+<p><img src="//seld.be/images/composer-graph-2018-01.png" alt="" /></p>
+
+<h2>PHP requirements in Packages</h2>
+
+<p>The second dataset is which versions are required by the PHP packages present on packagist. I only check the require statement in their current master version to see what the latest requirement is, and the dataset only includes packages that had commits in the last year to exclude all EOL'd projects as they don't update their requirements.</p>
+
+<h3>PHP Requirements - Recent Master - May 2018 (+/- diff from Recent Master November 2017)</h3>
+
+<table> <tbody> <tr><td style="width: 40px">5.2</td><td style="width: 120px">1.16% (-0.12)</td><td style="display: inline-block; height:9px; background: #8e8ef5; width: 3px"></td></tr> <tr><td>5.3</td><td>15.9% (-2.85)</td><td style="display: inline-block; height:9px; background: #8e8ef5; width: 32px"></td></tr> <tr><td>5.4</td><td>16.59% (-3.7)</td><td style="display: inline-block; height:9px; background: #8e8ef5; width: 34px"></td></tr> <tr><td>5.5</td><td>15.52% (-3.55)</td><td style="display: inline-block; height:9px; background: #8e8ef5; width: 32px"></td></tr> <tr><td>5.6</td><td>19.57% (-0.83)</td><td style="display: inline-block; height:9px; background: #8e8ef5; width: 40px"></td></tr> <tr><td>7.0</td><td>19.47% (4.62)</td><td style="display: inline-block; height:9px; background: #8e8ef5; width: 39px"></td></tr> <tr><td>7.1</td><td>11.15% (5.83)</td><td style="display: inline-block; height:9px; background: #8e8ef5; width: 23px"></td></tr> <tr><td>7.2</td><td>0.64% (0.61)</td><td style="display: inline-block; height:9px; background: #8e8ef5; width: 2px"></td></tr> </tbody></table>
+
+<p>This is as usual lagging behind a little but PHP 7 is finally seeing some real adoption in the OSS world which is nice.</p>
+    </div>
+
+    <nav class="flex justify-between text-sm md:text-base">
+        <div>
+                            <a href="https://seld.be/notes/php-versions-stats-2017-2-edition" title="Older Post: PHP Versions Stats - 2017.2 Edition">
+                    &LeftArrow; PHP Versions Stats - 2017.2 Edition
+                </a>
+                    </div>
+
+        <div>
+                            <a href="https://seld.be/notes/developing-on-windows-in-2018" title="Newer Post: Web Development on Windows in 2018">
+                    Web Development on Windows in 2018 &RightArrow;
+                </a>
+                    </div>
+    </nav>
+        </main>
+
+        <footer class="bg-white dark:bg-gray-900 text-center text-sm mt-12 py-4" role="contentinfo">
+            <ul class="flex flex-col md:flex-row justify-center">
+                <li class="list-none md:mr-2">
+                    <a href="https://twitter.com/seldaek">Twitter</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="mailto:j.boggiano@seld.be">E-Mail</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="https://github.com/Seldaek">GitHub</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="/wishlist">Wishlist</a>
+                </li>
+                <li class="list-none">
+                    All content &copy; Jordi Boggiano 2006-2025.
+                </li>
+            </ul>
+        </footer>
+
+        <script src="/assets/build/js/main.js?id=d987125254011a3fac10"></script>
+
+        <script>
+    const navMenu = {
+        toggle() {
+            const menu = document.getElementById('js-nav-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('lg:block');
+            document.getElementById('js-nav-menu-hide').classList.toggle('hidden');
+            document.getElementById('js-nav-menu-show').classList.toggle('hidden');
+        },
+    }
+</script>
+    </body>
+</html>
