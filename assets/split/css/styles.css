@@ -1,0 +1,118 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:300);
+
+body {
+    background: #111;
+    color: #fff;
+    font: 16px 'Helvetica Neue', 'Lato', sans-serif;
+    font-weight: 300;
+}
+footer {
+    text-align: center;
+    width: 320px;
+    margin: auto;
+    font-size: 15px;
+    opacity: 0.7;
+}
+a, a:link, a:visited, a:hover {
+    color: #bcaedb;
+    text-decoration: none;
+}
+#game {
+    display: block;
+    border: 1px solid rgba(0,0,0,.5);
+    position: relative;
+    width: 320px;
+    height: 480px;
+    margin: 20px auto;
+    background: #000 url(../img/bg.png);
+    box-shadow: 0 0 3px rgba(0,0,0,.5);
+}
+#game canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#ingame {
+    visibility: hidden;
+}
+#ingame.playing {
+    visibility: visible;
+}
+
+#audio {
+    left: 11px;
+    top: 9px;
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    opacity: 0.7;
+}
+#audio.muted {
+    opacity: 0.2;
+}
+#score {
+    right: 19px;
+    top: 14px;
+    position: absolute;
+    line-height: 20px;
+    width: 282px;
+    text-align: right;
+}
+#score span {
+    float: left;
+}
+#messages {
+    left: 0;
+    top: 50%;
+    position: absolute;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+    margin-top: -25px;
+}
+#messages, #score, #strength {
+    font-weight: 300;
+    font-size: 23px;
+    text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
+}
+#score {
+    font-size: 24px;
+}
+#strength {
+    left: 19px;
+    bottom: 32px;
+    position: absolute;
+}
+
+#energy-bar {
+    left: 14px;
+    bottom: 10px;
+    width: 290px;
+    height: 23px;
+    background: url(../img/bar_empty.png);
+    position: absolute;
+}
+#energy, #force {
+    background: url(../img/bar_full.png);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+#force {
+    width: 33%;
+}
+
+@media (max-width: 340px) {
+    body, html {
+        margin: 0;
+        padding: 0;
+    }
+    #game {
+        border: 0;
+        margin-top: 0;
+    }
+}
