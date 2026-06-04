@@ -65,16 +65,19 @@
         <footer class="bg-white dark:bg-gray-900 text-center text-sm mt-12 py-4" role="contentinfo">
             <ul class="flex flex-col md:flex-row justify-center">
                 <li class="list-none md:mr-2">
-                    <a href="https://twitter.com/seldaek">Twitter</a>
+                    <a href="https://mastodon.social/@seldaek">Mastodon</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="https://bsky.app/profile/seld.be">Bluesky</a>
+                </li>
+                <li class="list-none md:mr-2">
+                    <a href="https://x.com/seldaek">X</a>
                 </li>
                 <li class="list-none md:mr-2">
                     <a href="mailto:j.boggiano@seld.be">E-Mail</a>
                 </li>
                 <li class="list-none md:mr-2">
                     <a href="https://github.com/Seldaek">GitHub</a>
-                </li>
-                <li class="list-none md:mr-2">
-                    <a href="/wishlist">Wishlist</a>
                 </li>
                 <li class="list-none">
                     All content &copy; Jordi Boggiano 2006-{{ date('Y') }}.
